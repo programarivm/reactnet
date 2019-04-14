@@ -11,6 +11,8 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem } from 'reactstrap';
+import { Link, Route } from 'react-router-dom';
+import { Dashboard } from "./components/Dashboard.js";
 import './App.css';
 
 class App extends Component {
@@ -36,7 +38,9 @@ class App extends Component {
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
                 <NavItem>
-                  <NavLink href="/dashboard/">Dashboard</NavLink>
+                  <NavLink tag={Link} to="/dashboard">
+                    Dashboard
+                  </NavLink>
                 </NavItem>
                 <UncontrolledDropdown nav inNavbar>
                   <DropdownToggle nav caret>
@@ -70,6 +74,7 @@ class App extends Component {
               </Nav>
             </Collapse>
           </Navbar>
+          <Route path="/dashboard" component={Dashboard}  />
         </div>
       );
     }
