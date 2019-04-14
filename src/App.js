@@ -33,7 +33,7 @@ class App extends Component {
       return (
         <div>
           <Navbar color="light" light expand="md">
-            <NavbarBrand href="/"><b>nonet</b></NavbarBrand>
+            <NavbarBrand href="/"><b>dragnet</b></NavbarBrand>
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
