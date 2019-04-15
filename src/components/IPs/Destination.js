@@ -29,7 +29,7 @@ const data = {
   }]
 };
 
-class Dashboard extends React.Component {
+class Destination extends React.Component {
   render() {
     return (
       <div>
@@ -37,7 +37,8 @@ class Dashboard extends React.Component {
           <Row>
             <Col>
               <Breadcrumb className="mt-3">
-                <BreadcrumbItem active>Dashboard</BreadcrumbItem>
+                <BreadcrumbItem>IPs</BreadcrumbItem>
+                <BreadcrumbItem active>Destination</BreadcrumbItem>
               </Breadcrumb>
               <Pie data={data} />
             </Col>
@@ -48,4 +49,4 @@ class Dashboard extends React.Component {
   }
 }
 
-export { Dashboard };
+export { Destination };

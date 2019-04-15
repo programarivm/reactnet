@@ -1,5 +1,5 @@
 ## Dragnet
 
-> I needed to visually spot who was connected to my network and I wanted to practise my React skills, so I decided to write Dragnet.
+Dragnet is a real-time network traffic monitoring tool that uses a web interface with charts.
 
-TODO: Write some documentation.
+> TODO: Write documentation.
