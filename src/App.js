@@ -16,6 +16,7 @@ class App extends Component {
 
     this.ws.onmessage = event => {
       console.log(event.data);
+      this.ws.send('hello');
     };
 
     this.ws.onclose = () => {
