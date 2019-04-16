@@ -18,7 +18,7 @@ class TcpDump implements MessageComponentInterface
     {
         $this->client = $conn;
 
-        echo "New connection! ({$conn->resourceId})\n";
+        echo "New connection! ({$conn->resourceId})" . PHP_EOL;
     }
 
     public function onMessage(ConnectionInterface $from, $msg)
@@ -28,12 +28,12 @@ class TcpDump implements MessageComponentInterface
 
     public function onClose(ConnectionInterface $conn)
     {
-        echo "Connection {$conn->resourceId} has disconnected\n";
+        echo "Connection {$conn->resourceId} has disconnected" . PHP_EOL;
     }
 
     public function onError(ConnectionInterface $conn, \Exception $e)
     {
-        echo "An error has occurred: {$e->getMessage()}\n";
+        echo "An error has occurred: {$e->getMessage()}" . PHP_EOL;
 
         $conn->close();
     }
