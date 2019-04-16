@@ -1,0 +1,20 @@
+{
+  "name": "programarivm/reactnet",
+  "description": "Chess board implemented with React. Sends PGN signals to a Ratchet websocket server that uses PGN Chess, which is a PHP chess board representation.",
+  "authors": [
+    {
+      "name": "Jordi Bassagañas",
+      "email": "info@programarivm.com",
+      "homepage": "https://programarivm.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.0",
+    "cboden/ratchet": "^0.4.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "ReactNet\\": "reactphp/"
+    }
+  }
+}
