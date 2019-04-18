@@ -8,7 +8,7 @@ A real-time network traffic monitoring tool that uses a web interface with chart
 
     sudo php cli/tcpdump-writer.php eth0
 
-### 1.2. WebSockets server
+### 1.2. WebSocket server
 
     php cli/ws-server.php
 

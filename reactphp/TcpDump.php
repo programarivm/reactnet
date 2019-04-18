@@ -23,7 +23,13 @@ class TcpDump implements MessageComponentInterface
 
     public function onMessage(ConnectionInterface $from, $msg)
     {
-        $this->client->send('foo');
+        $next = (int) $msg + 1;
+        if (file_exists(APP_PATH . "/traffic/$next.txt")) {
+            $content = file_get_contents(APP_PATH . "/traffic/$msg.txt");
+            $this->client->send($content);
+        } else {
+            $this->client->send('wait');
+        }
     }
 
     public function onClose(ConnectionInterface $conn)

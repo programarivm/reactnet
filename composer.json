@@ -1,6 +1,6 @@
 {
   "name": "programarivm/reactnet",
-  "description": "Chess board implemented with React. Sends PGN signals to a Ratchet websocket server that uses PGN Chess, which is a PHP chess board representation.",
+  "description": "A real-time network traffic monitoring tool that uses a web interface with charts.",
   "authors": [
     {
       "name": "Jordi Bassagañas",

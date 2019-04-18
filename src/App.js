@@ -8,15 +8,22 @@ class App extends Component {
 
   ws = new WebSocket(url);
 
+  n = 0;
+
   componentDidMount() {
     this.ws.onopen = () => {
       console.log('connected');
-      this.ws.send('hello');
+      this.ws.send(this.n);
     };
 
     this.ws.onmessage = event => {
-      console.log(event.data);
-      this.ws.send('hello');
+      if (event.data !== 'wait') {
+          console.log(event.data);
+          // TODO ...
+          this.n += 1;
+      }
+
+      this.ws.send(this.n);
     };
 
     this.ws.onclose = () => {
