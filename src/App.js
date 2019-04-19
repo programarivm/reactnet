@@ -11,23 +11,22 @@ class App extends Component {
   n = 0;
 
   componentDidMount() {
+
     this.ws.onopen = () => {
-      console.log('connected');
       this.ws.send(this.n);
     };
 
     this.ws.onmessage = event => {
       if (event.data !== 'wait') {
-          console.log(event.data);
           // TODO ...
           this.n += 1;
       }
-
-      this.ws.send(this.n);
+      setTimeout(() => {
+          this.ws.send(this.n);
+      }, 5000);
     };
 
     this.ws.onclose = () => {
-      console.log('disconnected');
       this.setState({
         ws: new WebSocket(url)
       });

@@ -14,6 +14,11 @@ class TcpDump implements MessageComponentInterface
         echo 'New TcpDump server listening...' . PHP_EOL;
     }
 
+    public function __destruct()
+    {
+        self::deleteTraffic();
+    }
+
     public function onOpen(ConnectionInterface $conn)
     {
         $this->client = $conn;
@@ -21,12 +26,14 @@ class TcpDump implements MessageComponentInterface
         echo "New connection! ({$conn->resourceId})" . PHP_EOL;
     }
 
-    public function onMessage(ConnectionInterface $from, $msg)
+    public function onMessage(ConnectionInterface $from, $n)
     {
-        $next = (int) $msg + 1;
+        $next = (int) $n + 1;
         if (file_exists(APP_PATH . "/traffic/$next.txt")) {
-            $content = file_get_contents(APP_PATH . "/traffic/$msg.txt");
-            $this->client->send($content);
+            if (file_exists(APP_PATH . "/traffic/$n.txt")) {
+                $this->client->send(file_get_contents(APP_PATH . "/traffic/$n.txt"));
+                unlink(APP_PATH . "/traffic/$n.txt");
+            }
         } else {
             $this->client->send('wait');
         }
@@ -42,5 +49,15 @@ class TcpDump implements MessageComponentInterface
         echo "An error has occurred: {$e->getMessage()}" . PHP_EOL;
 
         $conn->close();
+    }
+
+    public static function deleteTraffic()
+    {
+        $files = glob(APP_PATH . "/traffic/*.txt");
+        foreach ($files as $file) {
+            if (is_file($file)) {
+                unlink($file);
+            }
+        }
     }
 }
