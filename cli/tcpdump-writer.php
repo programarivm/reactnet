@@ -6,6 +6,11 @@ use ReactNet\Filesystem;
 require __DIR__  . '/../vendor/autoload.php';
 require __DIR__ .  '/../app/config/constants.php';
 
+pcntl_signal(SIGINT, function() {
+    Filesystem::removeDir(APP_PATH . '/var');
+    exit('Good bye!' . PHP_EOL);
+});
+
 Filesystem::makeDir(APP_PATH . '/var', 0775, $argv[2]);
 Filesystem::makeDir(APP_PATH . '/var/tmp', 0775, $argv[2]);
 Filesystem::makeDir(APP_PATH . '/var/tmp/pcap', 0775, $argv[2]);
@@ -22,4 +27,6 @@ while (true) {
         exec("tshark -r $pcap -q -z io,phs > $zIoPhs");
         $n++;
     }
+    
+    pcntl_signal_dispatch();
 }
