@@ -25,5 +25,4 @@ yarn-error.log*
 # custom
 /composer.lock
 /vendor/
-/traffic/*
-!/traffic/.gitkeep
+/var/

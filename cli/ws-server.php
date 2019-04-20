@@ -3,13 +3,14 @@
 use Ratchet\Server\IoServer;
 use Ratchet\Http\HttpServer;
 use Ratchet\WebSocket\WsServer;
+use ReactNet\Filesystem;
 use ReactNet\TcpDump;
 
 require __DIR__  . '/../vendor/autoload.php';
-require __DIR__ .  '/../reactphp/config/constants.php';
+require __DIR__ .  '/../app/config/constants.php';
 
-pcntl_signal(SIGINT, function() use ($tcpDump) {
-    TcpDump::deleteTraffic();
+pcntl_signal(SIGINT, function() {
+    Filesystem::removeDir(APP_PATH . '/var');
     exit;
 });
 
