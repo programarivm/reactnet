@@ -6,10 +6,9 @@ use ReactNet\Filesystem\File\AbstractFile;
 
 class Z extends AbstractFile
 {
-    private $stats = [];
-
     public function ioPhs(): array
     {
+        $protocols = [];
         if ($file = fopen($this->filepath, 'r')) {
             while (!feof($file)) {
                 $line = preg_replace('~[[:cntrl:]]~', '', fgets($file));
@@ -23,12 +22,25 @@ class Z extends AbstractFile
                         $b[0] => $b[1],
                         'level' => (strlen($line) - strlen(ltrim($line))) / 2,
                     ];
-                    $this->stats[] = $protocol;
+                    $protocols[] = $protocol;
                 }
             }
             fclose($file);
         }
+        $this->buildTree($protocols);
 
-        return $this->stats;
+        return $protocols;
+    }
+
+    private function buildTree(array &$protocols)
+    {
+        for ($i = 0; $i < count($protocols); $i++) {
+            for ($j = $i - 1; $j >= 0; $j--) {
+                if ($protocols[$j]['level'] == $protocols[$i]['level'] - 1 ) {
+                    $protocols[$i]['parent'] = $j;
+                    break;
+                }
+            }
+        }
     }
 }
