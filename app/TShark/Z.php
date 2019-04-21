@@ -36,7 +36,7 @@ class Z extends AbstractFile
         for ($i = 0; $i < count($protocols); $i++) {
             for ($j = $i - 1; $j >= 0; $j--) {
                 if ($protocols[$j]['level'] == $protocols[$i]['level'] - 1 ) {
-                    $protocols[$i]['parent'] = $j;
+                    $protocols[$i]['parent_name'] = $protocols[$j]['name'];
                     break;
                 }
             }
