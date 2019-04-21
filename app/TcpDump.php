@@ -4,6 +4,7 @@ namespace ReactNet;
 
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
+use ReactNet\Filesystem\Dir;
 
 class TcpDump implements MessageComponentInterface
 {
@@ -12,11 +13,6 @@ class TcpDump implements MessageComponentInterface
     public function __construct()
     {
         echo 'New TcpDump server listening...' . PHP_EOL;
-    }
-
-    public function __destruct()
-    {
-        Filesystem::removeDir(APP_PATH . '/var/tmp');
     }
 
     public function onOpen(ConnectionInterface $conn)

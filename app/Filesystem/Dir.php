@@ -1,20 +1,20 @@
 <?php
 
-namespace ReactNet;
+namespace ReactNet\Filesystem;
 
-class Filesystem
+class Dir
 {
-    public static function removeDir(string $path)
+    public static function remove(string $path)
     {
         $files = glob($path . '/*');
         foreach ($files as $file) {
-            is_dir($file) ? self::removeDir($file) : unlink($file);
+            is_dir($file) ? self::remove($file) : unlink($file);
         }
 
-        rmdir($path);
+        !is_dir($path) ?: rmdir($path);
     }
 
-    public static function makeDir(string $path, int $mode, string $user)
+    public static function make(string $path, int $mode, string $user)
     {
         if (!file_exists($path)) {
             if (mkdir($path, $mode)) {
