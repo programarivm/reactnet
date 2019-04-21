@@ -27,12 +27,11 @@ class Z extends AbstractFile
             }
             fclose($file);
         }
-        $this->buildTree($protocols);
 
-        return $protocols;
+        return $this->buildTree($protocols);
     }
 
-    private function buildTree(array &$protocols)
+    private function buildTree(array $protocols)
     {
         for ($i = 0; $i < count($protocols); $i++) {
             for ($j = $i - 1; $j >= 0; $j--) {
@@ -42,5 +41,7 @@ class Z extends AbstractFile
                 }
             }
         }
+
+        return $protocols;
     }
 }
