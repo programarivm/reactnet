@@ -1,0 +1,20 @@
+
+===================================================================
+Protocol Hierarchy Statistics
+Filter: 
+
+eth                                      frames:1000 bytes:492855
+  ipv6                                   frames:951 bytes:487335
+    icmpv6                               frames:8 bytes:680
+    tcp                                  frames:943 bytes:486655
+      http                               frames:14 bytes:8233
+        data-text-lines                  frames:1 bytes:470
+        ocsp                             frames:10 bytes:6531
+      ssl                                frames:448 bytes:412778
+        tcp.segments                     frames:229 bytes:286780
+          ssl                            frames:206 bytes:269318
+  ip                                     frames:49 bytes:5520
+    udp                                  frames:46 bytes:5318
+      dns                                frames:46 bytes:5318
+    tcp                                  frames:3 bytes:202
+===================================================================

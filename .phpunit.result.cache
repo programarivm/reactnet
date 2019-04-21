@@ -1,0 +1,1 @@
+C:37:"PHPUnit\Runner\DefaultTestResultCache":254:{a:2:{s:7:"defects";a:2:{s:36:"ReactNet\Tests\TShark\StatsTest::foo";i:4;s:41:"ReactNet\Tests\TShark\StatsTest::to_array";i:4;}s:5:"times";a:2:{s:36:"ReactNet\Tests\TShark\StatsTest::foo";d:0.003;s:41:"ReactNet\Tests\TShark\StatsTest::to_array";d:0.003;}}}
