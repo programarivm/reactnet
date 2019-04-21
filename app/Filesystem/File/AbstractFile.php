@@ -8,8 +8,6 @@ abstract class AbstractFile
 {
     protected $filepath;
 
-    protected $line;
-
     public function __construct(string $filepath)
     {
         $content = file_get_contents($filepath);
@@ -22,6 +20,5 @@ abstract class AbstractFile
         }
 
         $this->filepath = $filepath;
-        $this->line = new Line;
     }
 }
