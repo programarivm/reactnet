@@ -5,6 +5,7 @@ namespace ReactNet;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
 use ReactNet\Filesystem\Dir;
+use ReactNet\TShark\Z as TSharkZ;
 
 class TcpDump implements MessageComponentInterface
 {
@@ -27,7 +28,9 @@ class TcpDump implements MessageComponentInterface
         $next = (int) $n + 1;
         if (file_exists(APP_PATH . "/var/tmp/z/io/phs/$next.txt")) {
             if (file_exists(APP_PATH . "/var/tmp/z/io/phs/$n.txt")) {
-                $this->client->send(file_get_contents(APP_PATH . "/var/tmp/z/io/phs/$n.txt"));
+                $this->client->send(
+                    json_encode((new TSharkZ(APP_PATH . "/var/tmp/z/io/phs/$n.txt"))->ioPhs())
+                );
                 unlink(APP_PATH . "/var/tmp/pcap/$n.pcap");
                 unlink(APP_PATH . "/var/tmp/z/io/phs/$n.txt");
             }
