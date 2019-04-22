@@ -8,21 +8,30 @@ class App extends Component {
 
   ws = new WebSocket(url);
 
-  n = 0;
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      n: 0,
+      protocols: []
+    };
+  }
 
   componentDidMount() {
 
     this.ws.onopen = () => {
-      this.ws.send(this.n);
+      this.ws.send(this.state.n);
     };
 
     this.ws.onmessage = event => {
       if (event.data !== 'wait') {
-          // TODO ...
-          this.n += 1;
+        this.process(event.data);
+        this.setState({
+          n: this.state.n + 1
+        });
       }
       setTimeout(() => {
-          this.ws.send(this.n);
+          this.ws.send(this.state.n);
       }, 5000);
     };
 
@@ -31,6 +40,26 @@ class App extends Component {
         ws: new WebSocket(url)
       });
     };
+  }
+
+  process(data) {
+    let items = JSON.parse(data);
+    for (let item of items) {
+      let exists = false;
+      for (let protocol of this.state.protocols) {
+        if (item.name === protocol.name && item.level === protocol.level && item.parent_name === protocol.parent_name) {
+          protocol.frames = parseInt(protocol.frames) + parseInt(item.frames);
+          protocol.bytes = parseInt(protocol.bytes) + parseInt(item.bytes);
+          exists = true;
+          break;
+        }
+      }
+      if (!exists) {
+        let newState = Object.assign({}, this.state);
+        newState.protocols.push(item);
+        this.setState(newState);
+      }
+    }
   }
 
   render() {
