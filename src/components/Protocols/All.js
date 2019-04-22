@@ -19,7 +19,8 @@ class All extends React.Component {
                 <BreadcrumbItem>Protocols</BreadcrumbItem>
                 <BreadcrumbItem active>All</BreadcrumbItem>
               </Breadcrumb>
-              <HorizontalBar data={this.props.stats.protocols.chart} redraw />
+              <HorizontalBar data={this.props.stats.protocols.chart.bytes} redraw />
+              <HorizontalBar data={this.props.stats.protocols.chart.frames} redraw />
             </Col>
           </Row>
         </Container>
