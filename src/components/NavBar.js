@@ -89,7 +89,10 @@ class NavBar extends React.Component {
         <Route path="/ips/all" component={AllIPs}  />
         <Route path="/ips/source" component={SourceIPs}  />
         <Route path="/ips/destination" component={DestinationIPs}  />
-        <Route path="/protocols/all" component={AllProtocols}  />
+        <Route
+          path="/protocols/all"
+          render={(props) => <AllProtocols stats={this.props.stats} {...props} />}
+        />
       </div>
     );
   }

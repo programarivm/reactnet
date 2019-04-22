@@ -13,7 +13,23 @@ class App extends Component {
 
     this.state = {
       n: 0,
-      protocols: []
+      protocols: {
+        tshark: [],
+        chart: {
+          labels: [],
+          datasets: [
+            {
+              label: 'Protocols',
+              backgroundColor: 'rgba(255,99,132,0.2)',
+              borderColor: 'rgba(255,99,132,1)',
+              borderWidth: 1,
+              hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+              hoverBorderColor: 'rgba(255,99,132,1)',
+              data: []
+            }
+          ]
+        }
+      }
     };
   }
 
@@ -42,29 +58,38 @@ class App extends Component {
   }
 
   process(data) {
+    let newState = Object.assign({}, this.state);
+    newState.protocols.chart.labels = [];
+    newState.protocols.chart.datasets[0].data = [];
     let items = JSON.parse(data);
     for (let item of items) {
       let exists = false;
-      for (let protocol of this.state.protocols) {
+      for (let protocol of newState.protocols.tshark) {
         if (item.name === protocol.name && item.level === protocol.level && item.parent_name === protocol.parent_name) {
           protocol.frames = parseInt(protocol.frames) + parseInt(item.frames);
           protocol.bytes = parseInt(protocol.bytes) + parseInt(item.bytes);
+          newState.protocols.chart.labels.push(protocol.name);
+          newState.protocols.chart.datasets[0].data.push(protocol.bytes);
+          // TODO frames...
           exists = true;
           break;
         }
       }
       if (!exists) {
-        let newState = Object.assign({}, this.state);
-        newState.protocols.push(item);
-        this.setState(newState);
+        newState.protocols.tshark.push(item);
+        newState.protocols.chart.labels.push(item.name);
+        newState.protocols.chart.datasets[0].data.push(item.bytes);
+        // TODO frames...
       }
     }
+
+    this.setState(newState);
   }
 
   render() {
     return (
       <div>
-        <NavBar />
+        <NavBar stats={this.state} />
       </div>
     );
   }
