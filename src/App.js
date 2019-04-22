@@ -36,9 +36,8 @@ class App extends Component {
     };
 
     this.ws.onclose = () => {
-      this.setState({
-        ws: new WebSocket(url)
-      });
+      console.log('disconnected');
+      // TODO ...
     };
   }
 
