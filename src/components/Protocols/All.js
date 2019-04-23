@@ -9,17 +9,6 @@ import {
 import {HorizontalBar} from 'react-chartjs-2';
 
 class All extends React.Component {
-  ProtocolTree(props) {
-    const protocols = props.stats.protocols.tshark;
-    const items = protocols.map((protocol) =>
-      <li>{protocol.name}</li>
-    );
-    return (
-      <ul>{items}</ul>
-    );
-  }
-
-
   render() {
     return (
       <div>
