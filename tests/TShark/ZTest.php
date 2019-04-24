@@ -126,20 +126,16 @@ class ZTest extends TestCase
     {
         $expected = [
             'src' => [
-                'fe79::12e0:67ff:fef2:df1c',
-                'fe79::12e0:67ff:fef2:df1c',
-                'fe79::12e0:67ff:fef2:df1c',
-                '2a01:4c8:80b:b513:1daf:abdf:7900:b550',
-                'fe79::12e0:67ff:fef2:df1c',
-                '2a02:4c6:70b:b515:fb98:f872:2fc8:b6fe',
+                'fe79::12e0:67ff:fef2:df1c' => 4,
+                '2a01:4c8:80b:b513:1daf:abdf:7900:b550' => 1,
+                '2a02:4c6:70b:b515:fb98:f872:2fc8:b6fe' => 1,
             ],
             'dest' => [
-                'fe80::9f83:c0d8:823e:eeff',
-                'ff02::1:ff3e:eeff',
-                'ff02::1:ff00:b550',
-                'fe79::12e0:67ff:fef2:df1c',
-                'ff02::1:ffb8:b7fe',
-                'fe79::12e0:67ff:fef2:df1c',
+                'fe80::9f83:c0d8:823e:eeff' => 1,
+                'ff02::1:ff3e:eeff' => 1,
+                'ff02::1:ff00:b550' => 1,
+                'fe79::12e0:67ff:fef2:df1c' => 2,
+                'ff02::1:ffb8:b7fe' => 1,
             ],
         ];
 

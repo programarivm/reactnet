@@ -48,6 +48,8 @@ class Z extends AbstractFile
             }
             fclose($file);
         }
+        $ips['src'] = array_count_values($ips['src']);
+        $ips['dest'] = array_count_values($ips['dest']);
 
         return $ips;
     }
