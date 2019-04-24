@@ -31,6 +31,27 @@ class Z extends AbstractFile
         return $this->buildTree($protocols);
     }
 
+    public function convIpv6(): array
+    {
+        $ips = [
+            'src' => [],
+            'dest' => [],
+        ];
+        if ($file = fopen($this->filepath, 'r')) {
+            while (!feof($file)) {
+                $line = preg_replace('~[[:cntrl:]]~', '', fgets($file));
+                if (strpos($line, '<->')) {
+                    $exploded = explode('<->', preg_replace('!\s+!', ' ', trim($line)));
+                    $ips['src'][] = trim($exploded[0]);
+                    $ips['dest'][] = strtok(trim($exploded[1]), ' ');
+                }
+            }
+            fclose($file);
+        }
+
+        return $ips;
+    }
+
     private function buildTree(array $protocols)
     {
         for ($i = 0; $i < count($protocols); $i++) {

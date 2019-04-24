@@ -118,4 +118,34 @@ class ZTest extends TestCase
 
         $this->assertEquals($expected, $stats);
     }
+
+    /**
+     * @test
+     */
+    public function conv_ipv6()
+    {
+        $expected = [
+            'src' => [
+                'fe79::12e0:67ff:fef2:df1c',
+                'fe79::12e0:67ff:fef2:df1c',
+                'fe79::12e0:67ff:fef2:df1c',
+                '2a01:4c8:80b:b513:1daf:abdf:7900:b550',
+                'fe79::12e0:67ff:fef2:df1c',
+                '2a02:4c6:70b:b515:fb98:f872:2fc8:b6fe',
+            ],
+            'dest' => [
+                'fe80::9f83:c0d8:823e:eeff',
+                'ff02::1:ff3e:eeff',
+                'ff02::1:ff00:b550',
+                'fe79::12e0:67ff:fef2:df1c',
+                'ff02::1:ffb8:b7fe',
+                'fe79::12e0:67ff:fef2:df1c',
+            ],
+        ];
+
+        $stats = (new TSharkZ(self::DATA_FOLDER.'/01_conv_ipv6.txt'))->convIpv6();
+
+        $this->assertEquals($expected, $stats);
+    }
+
 }
