@@ -6,28 +6,7 @@ import {
   Row,
   Col
 } from 'reactstrap';
-import {Pie} from 'react-chartjs-2';
-
-const data = {
-  labels: [
-    'Red',
-    'Green',
-    'Yellow'
-  ],
-  datasets: [{
-    data: [300, 50, 100],
-    backgroundColor: [
-    '#FF6384',
-    '#36A2EB',
-    '#FFCE56'
-    ],
-    hoverBackgroundColor: [
-    '#FF6384',
-    '#36A2EB',
-    '#FFCE56'
-    ]
-  }]
-};
+import {Doughnut} from 'react-chartjs-2';
 
 class All extends React.Component {
   render() {
@@ -40,7 +19,8 @@ class All extends React.Component {
                 <BreadcrumbItem>IPs</BreadcrumbItem>
                 <BreadcrumbItem active>All</BreadcrumbItem>
               </Breadcrumb>
-              <Pie data={data} />
+              <Doughnut data={this.props.stats.ips.chart.src} redraw />
+              <Doughnut data={this.props.stats.ips.chart.dest} redraw />
             </Col>
           </Row>
         </Container>
