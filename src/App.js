@@ -98,7 +98,7 @@ class App extends Component {
     let labelsSrc = Object.keys(items.ips.src);
     let dataSrc = Object.values(items.ips.src);
     for (let i = 0; i < labelsSrc.length; i++) {
-      if (!newState.ips.chart.src.datasets[0].data.includes(labelsSrc[i])) {
+      if (!newState.ips.chart.src.labels.includes(labelsSrc[i])) {
         newState.ips.chart.src.labels.push(labelsSrc[i]);
         newState.ips.chart.src.datasets[0].data.push(dataSrc[i]);
         newState.ips.chart.src.datasets[0].backgroundColor.push('#'+(Math.random()*0xFFFFFF<<0).toString(16));
@@ -108,7 +108,7 @@ class App extends Component {
     let labelsDest = Object.keys(items.ips.dest);
     let dataDest = Object.values(items.ips.dest);
     for (let i = 0; i < labelsDest.length; i++) {
-      if (!newState.ips.chart.dest.datasets[0].data.includes(labelsDest[i])) {
+      if (!newState.ips.chart.dest.labels.includes(labelsDest[i])) {
         newState.ips.chart.dest.labels.push(labelsDest[i]);
         newState.ips.chart.dest.datasets[0].data.push(dataDest[i]);
         newState.ips.chart.dest.datasets[0].backgroundColor.push('#'+(Math.random()*0xFFFFFF<<0).toString(16));
