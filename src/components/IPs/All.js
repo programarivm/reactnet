@@ -6,7 +6,7 @@ import {
   Row,
   Col
 } from 'reactstrap';
-import {Doughnut} from 'react-chartjs-2';
+import {Polar} from 'react-chartjs-2';
 
 class All extends React.Component {
   render() {
@@ -19,9 +19,8 @@ class All extends React.Component {
                 <BreadcrumbItem>IPs</BreadcrumbItem>
                 <BreadcrumbItem active>All</BreadcrumbItem>
               </Breadcrumb>
-              <Doughnut data={this.props.stats.ips.chart.src} redraw />
-              <Doughnut data={this.props.stats.ips.chart.dest} redraw />
-            </Col>
+              <Polar data={this.props.stats.ips.chart.occurrences} redraw />
+              </Col>
           </Row>
         </Container>
       </div>

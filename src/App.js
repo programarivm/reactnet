@@ -14,25 +14,15 @@ class App extends Component {
     this.state = {
       n: 0,
       ips: {
-        tshark: [],
+        history: {},
         chart: {
-          src: {
+          occurrences: {
             labels: [],
             datasets: [
               {
-                label: 'Source',
+                data: [],
                 backgroundColor: [],
-                data: []
-              }
-            ]
-          },
-          dest: {
-            labels: [],
-            datasets: [
-              {
-                label: 'Destination',
-                backgroundColor: [],
-                data: []
+                label: 'IPs'
               }
             ]
           }
@@ -94,26 +84,25 @@ class App extends Component {
     let items = JSON.parse(data);
     let newState = Object.assign({}, this.state);
     // ips
-    // source
-    let labelsSrc = Object.keys(items.ips.src);
-    let dataSrc = Object.values(items.ips.src);
-    for (let i = 0; i < labelsSrc.length; i++) {
-      if (!newState.ips.chart.src.labels.includes(labelsSrc[i])) {
-        newState.ips.chart.src.labels.push(labelsSrc[i]);
-        newState.ips.chart.src.datasets[0].data.push(dataSrc[i]);
-        newState.ips.chart.src.datasets[0].backgroundColor.push('#'+(Math.random()*0xFFFFFF<<0).toString(16));
-      }
+    if (Object.keys(newState.ips.history).length === 0) {
+      newState.ips.history = items.ips;
+    } else {
+      Object.keys(items.ips).forEach(function(key) {
+        newState.ips.history.hasOwnProperty(key)
+          ? newState.ips.history[key] += items.ips[key]
+          : newState.ips.history[key] = items.ips[key];
+      });
     }
-    // destination
-    let labelsDest = Object.keys(items.ips.dest);
-    let dataDest = Object.values(items.ips.dest);
-    for (let i = 0; i < labelsDest.length; i++) {
-      if (!newState.ips.chart.dest.labels.includes(labelsDest[i])) {
-        newState.ips.chart.dest.labels.push(labelsDest[i]);
-        newState.ips.chart.dest.datasets[0].data.push(dataDest[i]);
-        newState.ips.chart.dest.datasets[0].backgroundColor.push('#'+(Math.random()*0xFFFFFF<<0).toString(16));
-      }
+    let keys = Object.keys(newState.ips.history);
+    let occurrences = {};
+    for (let i = 0; i < keys.length; i++) {
+      !occurrences.hasOwnProperty(newState.ips.history[keys[i]])
+        ? occurrences[newState.ips.history[keys[i]]] = 1
+        : occurrences[newState.ips.history[keys[i]]] += 1;
     }
+    newState.ips.chart.occurrences.labels = Object.keys(occurrences);
+    newState.ips.chart.occurrences.datasets[0].data = Object.values(occurrences);
+    newState.ips.chart.occurrences.datasets[0].backgroundColor.push('#'+(Math.random()*0xFFFFFF<<0).toString(16));
     // protocols
     newState.protocols.chart.bytes.labels = [];
     newState.protocols.chart.frames.labels = [];
