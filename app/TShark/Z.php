@@ -33,23 +33,20 @@ class Z extends AbstractFile
 
     public function convIpv6(): array
     {
-        $ips = [
-            'src' => [],
-            'dest' => [],
-        ];
+        $ips = [];
         if ($file = fopen($this->filepath, 'r')) {
             while (!feof($file)) {
                 $line = preg_replace('~[[:cntrl:]]~', '', fgets($file));
                 if (strpos($line, '<->')) {
                     $exploded = explode('<->', preg_replace('!\s+!', ' ', trim($line)));
-                    $ips['src'][] = trim($exploded[0]);
-                    $ips['dest'][] = strtok(trim($exploded[1]), ' ');
+                    $srcIp = trim($exploded[0]);
+                    $destIp = strtok(trim($exploded[1]), ' ');
+                    !isset($ips[$srcIp]) ? $ips[$srcIp] = 1 : $ips[$srcIp]++;
+                    !isset($ips[$destIp]) ? $ips[$destIp] = 1 : $ips[$destIp]++;
                 }
             }
             fclose($file);
         }
-        $ips['src'] = array_count_values($ips['src']);
-        $ips['dest'] = array_count_values($ips['dest']);
 
         return $ips;
     }
