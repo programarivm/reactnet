@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { NavBar } from "./components/NavBar.js";
+import helpers  from './helpers.js';
 import './App.css';
 
 const url = 'ws://localhost:3001';
@@ -90,16 +91,11 @@ class App extends Component {
           : newState.ips.history[key] = data.ips[key];
       });
     }
-    let keys = Object.keys(newState.ips.history);
-    let occurrences = {};
-    for (let i = 0; i < keys.length; i++) {
-      !occurrences.hasOwnProperty(newState.ips.history[keys[i]])
-        ? occurrences[newState.ips.history[keys[i]]] = 1
-        : occurrences[newState.ips.history[keys[i]]] += 1;
-    }
-    newState.ips.chart.occurrences.labels = Object.keys(occurrences);
-    newState.ips.chart.occurrences.datasets[0].data = Object.values(occurrences);
-    newState.ips.chart.occurrences.datasets[0].backgroundColor.push('#'+(Math.random()*0xFFFFFF<<0).toString(16));
+    let occurrences = helpers.countOccurrences(newState.ips.history);
+    newState.ips.chart.occurrences.labels = Object.values(occurrences);
+    newState.ips.chart.occurrences.datasets[0].data = Object.keys(occurrences);
+    newState.ips.chart.occurrences.datasets[0].backgroundColor.push('#'+Math.floor(Math.random()*16777215).toString(16));
+    newState.ips.history = helpers.sortObject(newState.ips.history);
   }
 
   calcProtocols(newState, data) {
