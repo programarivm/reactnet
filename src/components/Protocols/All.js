@@ -24,7 +24,7 @@ class All extends React.Component {
                   <ul>
                     {
                       this.props.stats.protocols.tshark.map(function(item, index) {
-                        return (<li>{'--'.repeat(item.level)} {item.name}</li>)
+                        return (<li key={index}>{'--'.repeat(item.level)} {item.name}</li>)
                       })
                     }
                   </ul>
