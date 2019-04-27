@@ -64,7 +64,7 @@ class App extends Component {
 
     this.ws.onmessage = event => {
       if (event.data !== 'wait') {
-        this.calcStats(event.data);
+        this.calcStats(JSON.parse(event.data));
         this.setState({
           n: this.state.n + 1
         });
@@ -80,17 +80,14 @@ class App extends Component {
     };
   }
 
-  calcStats(data) {
-    let items = JSON.parse(data);
-    let newState = Object.assign({}, this.state);
-    // ips
+  calcIps(newState, data) {
     if (Object.keys(newState.ips.history).length === 0) {
-      newState.ips.history = items.ips;
+      newState.ips.history = data.ips;
     } else {
-      Object.keys(items.ips).forEach(function(key) {
+      Object.keys(data.ips).forEach((key) => {
         newState.ips.history.hasOwnProperty(key)
-          ? newState.ips.history[key] += items.ips[key]
-          : newState.ips.history[key] = items.ips[key];
+          ? newState.ips.history[key] += data.ips[key]
+          : newState.ips.history[key] = data.ips[key];
       });
     }
     let keys = Object.keys(newState.ips.history);
@@ -103,12 +100,14 @@ class App extends Component {
     newState.ips.chart.occurrences.labels = Object.keys(occurrences);
     newState.ips.chart.occurrences.datasets[0].data = Object.values(occurrences);
     newState.ips.chart.occurrences.datasets[0].backgroundColor.push('#'+(Math.random()*0xFFFFFF<<0).toString(16));
-    // protocols
+  }
+
+  calcProtocols(newState, data) {
     newState.protocols.chart.bytes.labels = [];
     newState.protocols.chart.frames.labels = [];
     newState.protocols.chart.bytes.datasets[0].data = [];
     newState.protocols.chart.frames.datasets[0].data = [];
-    for (let item of items.protocols) {
+    for (let item of data.protocols) {
       let exists = false;
       for (let protocol of newState.protocols.tshark) {
         if (item.name === protocol.name && item.level === protocol.level && item.parent_name === protocol.parent_name) {
@@ -130,6 +129,12 @@ class App extends Component {
         newState.protocols.chart.frames.datasets[0].data.push(item.frames);
       }
     }
+  }
+
+  calcStats(data) {
+    let newState = Object.assign({}, this.state);
+    this.calcIps(newState, data);
+    this.calcProtocols(newState, data);
     this.setState(newState);
   }
 
