@@ -12,6 +12,44 @@ class ZTest extends TestCase
     /**
      * @test
      */
+    public function conv_ip()
+    {
+        $expected = [
+            '192.168.1.1' => 1,
+            '192.168.1.103' => 4,
+            '93.184.220.113' => 1,
+            '172.217.169.1' => 1,
+            '216.58.213.4' => 1,
+        ];
+
+        $stats = (new TSharkZ(self::DATA_FOLDER.'/01_conv_ip.txt'))->convIpv6();
+
+        $this->assertEquals($expected, $stats);
+    }
+
+    /**
+     * @test
+     */
+    public function conv_ipv6()
+    {
+        $expected = [
+            'fe79::12e0:67ff:fef2:df1c' => 6,
+            'fe80::9f83:c0d8:823e:eeff' => 1,
+            'ff02::1:ff3e:eeff' => 1,
+            'ff02::1:ff00:b550' => 1,
+            '2a01:4c8:80b:b513:1daf:abdf:7900:b550' => 1,
+            'ff02::1:ffb8:b7fe' => 1,
+            '2a02:4c6:70b:b515:fb98:f872:2fc8:b6fe' => 1,
+        ];
+
+        $stats = (new TSharkZ(self::DATA_FOLDER.'/01_conv_ipv6.txt'))->convIpv6();
+
+        $this->assertEquals($expected, $stats);
+    }
+
+    /**
+     * @test
+     */
     public function io_phs()
     {
         $expected = [
@@ -118,25 +156,4 @@ class ZTest extends TestCase
 
         $this->assertEquals($expected, $stats);
     }
-
-    /**
-     * @test
-     */
-    public function conv_ipv6()
-    {
-        $expected = [
-            'fe79::12e0:67ff:fef2:df1c' => 6,
-            'fe80::9f83:c0d8:823e:eeff' => 1,
-            'ff02::1:ff3e:eeff' => 1,
-            'ff02::1:ff00:b550' => 1,
-            '2a01:4c8:80b:b513:1daf:abdf:7900:b550' => 1,
-            'ff02::1:ffb8:b7fe' => 1,
-            '2a02:4c6:70b:b515:fb98:f872:2fc8:b6fe' => 1,
-        ];
-
-        $stats = (new TSharkZ(self::DATA_FOLDER.'/01_conv_ipv6.txt'))->convIpv6();
-
-        $this->assertEquals($expected, $stats);
-    }
-
 }
