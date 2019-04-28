@@ -21,7 +21,7 @@ class V4 extends React.Component {
                 <BreadcrumbItem active>IPv4</BreadcrumbItem>
               </Breadcrumb>
               <Row>
-                <Col lg="4">
+                <Col lg="4" className="ip-occurrences">
                   <Table>
                     <thead>
                       <tr>
