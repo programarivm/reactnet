@@ -31,11 +31,10 @@ class All extends React.Component {
                     </thead>
                     <tbody>
                         {
-                          Object.keys(this.props.stats.ips.history).map((item, index) => {
-                            let occurrences = 'foo';
+                          Object.keys(this.props.stats.ips.v6.history).map((item, index) => {
                             return (<tr key={index}>
                               <td>{item}</td>
-                              <td>{this.props.stats.ips.history[item]}</td>
+                              <td>{this.props.stats.ips.v6.history[item]}</td>
                             </tr>)
                           })
                         }
@@ -43,7 +42,7 @@ class All extends React.Component {
                   </Table>
                 </Col>
                 <Col lg="8">
-                  <Polar data={this.props.stats.ips.chart.occurrences} redraw />
+                  <Polar data={this.props.stats.ips.v6.chart.occurrences} redraw />
                 </Col>
               </Row>
             </Col>

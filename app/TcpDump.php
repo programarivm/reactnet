@@ -30,7 +30,10 @@ class TcpDump implements MessageComponentInterface
             if (file_exists(APP_PATH . "/var/tmp/z/io/phs/$n.txt")) {
                 $this->client->send(
                     json_encode([
-                        'ips' => (new TSharkZ(APP_PATH . "/var/tmp/z/conv/ipv6/$n.txt"))->convIpv6(),
+                        'ips' => [
+                            'v4' => (new TSharkZ(APP_PATH . "/var/tmp/z/conv/ip/$n.txt"))->convIp(),
+                            'v6' => (new TSharkZ(APP_PATH . "/var/tmp/z/conv/ipv6/$n.txt"))->convIpv6(),
+                        ],
                         'protocols' => (new TSharkZ(APP_PATH . "/var/tmp/z/io/phs/$n.txt"))->ioPhs(),
                     ])
                 );

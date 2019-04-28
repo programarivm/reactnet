@@ -15,17 +15,34 @@ class App extends Component {
     this.state = {
       n: 0,
       ips: {
-        history: {},
-        chart: {
-          occurrences: {
-            labels: [],
-            datasets: [
-              {
-                data: [],
-                backgroundColor: [],
-                label: 'IPs'
-              }
-            ]
+        v4: {
+          history: {},
+          chart: {
+            occurrences: {
+              labels: [],
+              datasets: [
+                {
+                  data: [],
+                  backgroundColor: [],
+                  label: 'IPs'
+                }
+              ]
+            }
+          }
+        },
+        v6: {
+          history: {},
+          chart: {
+            occurrences: {
+              labels: [],
+              datasets: [
+                {
+                  data: [],
+                  backgroundColor: [],
+                  label: 'IPs'
+                }
+              ]
+            }
           }
         }
       },
@@ -81,21 +98,21 @@ class App extends Component {
     };
   }
 
-  calcIps(newState, data) {
-    if (Object.keys(newState.ips.history).length === 0) {
-      newState.ips.history = data.ips;
+  calcIpv6(newState, data) {
+    if (Object.keys(newState.ips.v6.history).length === 0) {
+      newState.ips.v6.history = data.ips.v6;
     } else {
-      Object.keys(data.ips).forEach((key) => {
-        newState.ips.history.hasOwnProperty(key)
-          ? newState.ips.history[key] += data.ips[key]
-          : newState.ips.history[key] = data.ips[key];
+      Object.keys(data.ips.v6).forEach((key) => {
+        newState.ips.v6.history.hasOwnProperty(key)
+          ? newState.ips.v6.history[key] += data.ips.v6[key]
+          : newState.ips.v6.history[key] = data.ips.v6[key];
       });
     }
-    let occurrences = helpers.countOccurrences(newState.ips.history);
-    newState.ips.chart.occurrences.labels = Object.values(occurrences);
-    newState.ips.chart.occurrences.datasets[0].data = Object.keys(occurrences);
-    newState.ips.chart.occurrences.datasets[0].backgroundColor.push('#'+Math.floor(Math.random()*16777215).toString(16));
-    newState.ips.history = helpers.sortObject(newState.ips.history);
+    let occurrences = helpers.countOccurrences(newState.ips.v6.history);
+    newState.ips.v6.chart.occurrences.labels = Object.values(occurrences);
+    newState.ips.v6.chart.occurrences.datasets[0].data = Object.keys(occurrences);
+    newState.ips.v6.chart.occurrences.datasets[0].backgroundColor.push('#'+Math.floor(Math.random()*16777215).toString(16));
+    newState.ips.v6.history = helpers.sortObject(newState.ips.v6.history);
   }
 
   calcProtocols(newState, data) {
@@ -129,7 +146,7 @@ class App extends Component {
 
   calcStats(data) {
     let newState = Object.assign({}, this.state);
-    this.calcIps(newState, data);
+    this.calcIpv6(newState, data);
     this.calcProtocols(newState, data);
     this.setState(newState);
   }
