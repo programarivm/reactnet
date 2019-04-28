@@ -13,9 +13,8 @@ import {
   DropdownItem } from 'reactstrap';
 import { Link, Route } from 'react-router-dom';
 import { Dashboard } from "./Dashboard.js";
-import { All as AllIPs } from "./IPs/All.js";
-import { Destination as DestinationIPs } from "./IPs/Destination.js";
-import { Source as SourceIPs } from "./IPs/Source.js";
+import { V4 as Ipv4 } from "./IPs/V4.js";
+import { V6 as Ipv6 } from "./IPs/V6.js";
 import { All as AllProtocols } from "./Protocols/All.js";
 
 class NavBar extends React.Component {
@@ -47,18 +46,14 @@ class NavBar extends React.Component {
               </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
-                  IPs
+                  IP
                 </DropdownToggle>
                 <DropdownMenu right>
-                  <DropdownItem tag={Link} to="/ips/all">
-                    All
+                  <DropdownItem tag={Link} to="/ips/v4">
+                    IPv4
                   </DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem tag={Link} to="/ips/source">
-                    Source
-                  </DropdownItem>
-                  <DropdownItem tag={Link} to="/ips/destination">
-                    Destination
+                  <DropdownItem tag={Link} to="/ips/v6">
+                    IPv6
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
@@ -87,11 +82,13 @@ class NavBar extends React.Component {
         </Navbar>
         <Route path="/dashboard" component={Dashboard}  />
         <Route
-          path="/ips/all"
-          render={(props) => <AllIPs stats={this.props.stats} {...props} />}
+          path="/ips/v4"
+          render={(props) => <Ipv4 stats={this.props.stats} {...props} />}
         />
-        <Route path="/ips/source" component={SourceIPs}  />
-        <Route path="/ips/destination" component={DestinationIPs}  />
+        <Route
+          path="/ips/v6"
+          render={(props) => <Ipv6 stats={this.props.stats} {...props} />}
+        />
         <Route
           path="/protocols/all"
           render={(props) => <AllProtocols stats={this.props.stats} {...props} />}

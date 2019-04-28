@@ -9,7 +9,7 @@ import {
 } from 'reactstrap';
 import {Polar} from 'react-chartjs-2';
 
-class All extends React.Component {
+class V6 extends React.Component {
   render() {
     return (
       <div>
@@ -17,8 +17,8 @@ class All extends React.Component {
           <Row>
             <Col>
               <Breadcrumb className="mt-3">
-                <BreadcrumbItem>IPs</BreadcrumbItem>
-                <BreadcrumbItem active>All</BreadcrumbItem>
+                <BreadcrumbItem>IP</BreadcrumbItem>
+                <BreadcrumbItem active>IPv6</BreadcrumbItem>
               </Breadcrumb>
               <Row>
                 <Col lg="4">
@@ -53,4 +53,4 @@ class All extends React.Component {
   }
 }
 
-export { All };
+export { V6 };

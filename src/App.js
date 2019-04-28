@@ -98,6 +98,23 @@ class App extends Component {
     };
   }
 
+  calcIpv4(newState, data) {
+    if (Object.keys(newState.ips.v4.history).length === 0) {
+      newState.ips.v4.history = data.ips.v4;
+    } else {
+      Object.keys(data.ips.v4).forEach((key) => {
+        newState.ips.v4.history.hasOwnProperty(key)
+          ? newState.ips.v4.history[key] += data.ips.v4[key]
+          : newState.ips.v4.history[key] = data.ips.v4[key];
+      });
+    }
+    let occurrences = helpers.countOccurrences(newState.ips.v4.history);
+    newState.ips.v4.chart.occurrences.labels = Object.values(occurrences);
+    newState.ips.v4.chart.occurrences.datasets[0].data = Object.keys(occurrences);
+    newState.ips.v4.chart.occurrences.datasets[0].backgroundColor.push('#'+Math.floor(Math.random()*16777215).toString(16));
+    newState.ips.v4.history = helpers.sortObject(newState.ips.v4.history);
+  }
+
   calcIpv6(newState, data) {
     if (Object.keys(newState.ips.v6.history).length === 0) {
       newState.ips.v6.history = data.ips.v6;
@@ -146,6 +163,7 @@ class App extends Component {
 
   calcStats(data) {
     let newState = Object.assign({}, this.state);
+    this.calcIpv4(newState, data);
     this.calcIpv6(newState, data);
     this.calcProtocols(newState, data);
     this.setState(newState);
