@@ -10,6 +10,14 @@ import {
 } from 'reactstrap';
 import {Polar} from 'react-chartjs-2';
 
+const options = {
+  animation: {
+    animateRotate: false,
+    animateScale: true,
+    easing: 'easeOutQuad'
+  }
+};
+
 class V6 extends React.Component {
   render() {
     return (
@@ -46,7 +54,7 @@ class V6 extends React.Component {
                     </Table>
                   </Col>
                   <Col lg="8">
-                    <Polar data={this.props.stats.ips.v6.chart.occurrences} redraw />
+                    <Polar data={this.props.stats.ips.v6.chart.occurrences} options={options} redraw />
                   </Col>
                 </Row>
               </Card>
