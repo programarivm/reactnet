@@ -14,6 +14,11 @@ code {
     monospace;
 }
 
+ul.protocol-tree {
+  list-style-type: none;
+  font-size: 13px;
+}
+
 .ip-occurrences {
   font-size: 12px;
   height: 400px;

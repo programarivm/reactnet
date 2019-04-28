@@ -5,14 +5,11 @@ import {
   NavbarToggler,
   NavbarBrand,
   Nav,
-  NavItem,
-  NavLink,
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem } from 'reactstrap';
 import { Link, Route } from 'react-router-dom';
-import { Dashboard } from "./Dashboard.js";
 import { V4 as Ipv4 } from "./IPs/V4.js";
 import { V6 as Ipv6 } from "./IPs/V6.js";
 import { All as AllProtocols } from "./Protocols/All.js";
@@ -39,11 +36,6 @@ class NavBar extends React.Component {
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink tag={Link} to="/dashboard">
-                  Dashboard
-                </NavLink>
-              </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
                   IP
@@ -65,22 +57,11 @@ class NavBar extends React.Component {
                   <DropdownItem tag={Link} to="/protocols/all">
                     All
                   </DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem>
-                    Protocol 1
-                  </DropdownItem>
-                  <DropdownItem>
-                    Protocol 2
-                  </DropdownItem>
-                  <DropdownItem>
-                    ...
-                  </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
             </Nav>
           </Collapse>
         </Navbar>
-        <Route path="/dashboard" component={Dashboard}  />
         <Route
           path="/ips/v4"
           render={(props) => <Ipv4 stats={this.props.stats} {...props} />}

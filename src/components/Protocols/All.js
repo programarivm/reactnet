@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Breadcrumb,
   BreadcrumbItem,
+  Card,
   Container,
   Row,
   Col
@@ -19,21 +20,25 @@ class All extends React.Component {
                 <BreadcrumbItem>Protocols</BreadcrumbItem>
                 <BreadcrumbItem active>All</BreadcrumbItem>
               </Breadcrumb>
-              <Row>
-                <Col lg="4">
-                  <ul>
-                    {
-                      this.props.stats.protocols.tshark.map(function(item, index) {
-                        return (<li key={index}>{'--'.repeat(item.level)} {item.name}</li>)
-                      })
-                    }
-                  </ul>
-                </Col>
-                <Col lg="8">
-                  <HorizontalBar data={this.props.stats.protocols.chart.bytes} redraw />
-                  <HorizontalBar data={this.props.stats.protocols.chart.frames} redraw />
-                </Col>
-              </Row>
+              <Card body>
+                <h4>Protocol tree</h4>
+                <p>Protocol hierarchy statistics listing both number of packets and bytes.</p>
+                <Row>
+                  <Col lg="4">
+                    <ul className="protocol-tree">
+                      {
+                        this.props.stats.protocols.tshark.map(function(item, index) {
+                          return (<li key={index}>{'--'.repeat(item.level)} {item.name}</li>)
+                        })
+                      }
+                    </ul>
+                  </Col>
+                  <Col lg="8">
+                    <HorizontalBar data={this.props.stats.protocols.chart.bytes} redraw />
+                    <HorizontalBar data={this.props.stats.protocols.chart.frames} redraw />
+                  </Col>
+                </Row>
+              </Card>
             </Col>
           </Row>
         </Container>
