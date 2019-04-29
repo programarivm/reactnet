@@ -31,6 +31,32 @@ class Z extends AbstractFile
         return $this->convIp();
     }
 
+    public function endpointsIpv6(): array
+    {
+        $endpoints = [];
+        if ($file = fopen($this->filepath, 'r')) {
+            while (!feof($file)) {
+                $line = preg_replace('~[[:cntrl:]]~', '', fgets($file));
+                $exploded = explode(' ', preg_replace('!\s+!', ' ', trim($line)));
+                $isValidIp = filter_var($exploded[0], FILTER_VALIDATE_IP);
+                if ($isValidIp) {
+                    $endpoints[] = [
+                        'ip' => $exploded[0],
+                        'packets' => $exploded[1],
+                        'bytes' => $exploded[2],
+                        'tx_packets' => $exploded[3],
+                        'tx_bytes' => $exploded[4],
+                        'rx_packets' => $exploded[5],
+                        'rx_bytes' => $exploded[6],
+                    ];
+                }
+            }
+            fclose($file);
+        }
+
+        return $endpoints;
+    }
+
     public function ioPhs(): array
     {
         $protocols = [];

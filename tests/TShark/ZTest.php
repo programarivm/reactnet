@@ -50,6 +50,64 @@ class ZTest extends TestCase
     /**
      * @test
      */
+    public function endpoints_ipv6()
+    {
+        $expected = [
+            [
+                'ip' => '2a01:4c8:81d:589c:301a:8926:f9dd:c9f1',
+                'packets' => 2,
+                'bytes' => 220,
+                'tx_packets' => 1,
+                'tx_bytes' => 110,
+                'rx_packets' => 1,
+                'rx_bytes' => 110,
+            ],
+            [
+                'ip' => '2001:67c:1560:8003::c8',
+                'packets' => 2,
+                'bytes' => 220,
+                'tx_packets' => 1,
+                'tx_bytes' => 110,
+                'rx_packets' => 1,
+                'rx_bytes' => 110,
+            ],
+            [
+                'ip' => 'fe80::4ea:f3ff:fed7:c87c',
+                'packets' => 2,
+                'bytes' => 172,
+                'tx_packets' => 1,
+                'tx_bytes' => 86,
+                'rx_packets' => 1,
+                'rx_bytes' => 86,
+            ],
+            [
+                'ip' => 'ff02::1:ffce:ef5a',
+                'packets' => 1,
+                'bytes' => 86,
+                'tx_packets' => 0,
+                'tx_bytes' => 0,
+                'rx_packets' => 1,
+                'rx_bytes' => 86,
+            ],
+            [
+                'ip' => 'fe80::4917:ffbd:bace:ef5a',
+                'packets' => 1,
+                'bytes' => 86,
+                'tx_packets' => 1,
+                'tx_bytes' => 86,
+                'rx_packets' => 0,
+                'rx_bytes' => 0,
+            ],
+        ];
+
+        $stats = (new TSharkZ(self::DATA_FOLDER.'/01_endpoints_ipv6.txt'))->endpointsIpv6();
+
+        $this->assertEquals($expected, $stats);
+    }
+
+    /**
+     * @test
+     */
     public function io_phs()
     {
         $expected = [
