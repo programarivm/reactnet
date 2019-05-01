@@ -31,7 +31,7 @@ class Z extends AbstractFile
         return $this->convIp();
     }
 
-    public function endpointsIpv6(): array
+    public function endpointsIp(): array
     {
         $endpoints = [];
         if ($file = fopen($this->filepath, 'r')) {
@@ -55,6 +55,11 @@ class Z extends AbstractFile
         }
 
         return $endpoints;
+    }
+
+    public function endpointsIpv6(): array
+    {
+        return $this->endpointsIp();
     }
 
     public function ioPhs(): array

@@ -50,6 +50,37 @@ class ZTest extends TestCase
     /**
      * @test
      */
+    public function endpoints_ip()
+    {
+        $expected = [
+            [
+                'ip' => '61.44.105.214',
+                'packets' => 2227,
+                'bytes' => 2216138,
+                'tx_packets' => 1529,
+                'tx_bytes' => 1997614,
+                'rx_packets' => 698,
+                'rx_bytes' => 218524,
+            ],
+            [
+                'ip' => '192.168.1.103',
+                'packets' => 2227,
+                'bytes' => 2216138,
+                'tx_packets' => 698,
+                'tx_bytes' => 218524,
+                'rx_packets' => 1529,
+                'rx_bytes' => 1997614,
+            ],
+        ];
+
+        $stats = (new TSharkZ(self::DATA_FOLDER.'/01_endpoints_ip.txt'))->endpointsIp();
+
+        $this->assertEquals($expected, $stats);
+    }
+
+    /**
+     * @test
+     */
     public function endpoints_ipv6()
     {
         $expected = [
