@@ -117,12 +117,12 @@ class App extends Component {
 
   calcIpv6(newState, data) {
     if (Object.keys(newState.ips.v6.history).length === 0) {
-      newState.ips.v6.history = data.ips.v6;
+      newState.ips.v6.history = data.ips.v6.conv;
     } else {
-      Object.keys(data.ips.v6).forEach((key) => {
+      Object.keys(data.ips.v6.conv).forEach((key) => {
         newState.ips.v6.history.hasOwnProperty(key)
-          ? newState.ips.v6.history[key] += data.ips.v6[key]
-          : newState.ips.v6.history[key] = data.ips.v6[key];
+          ? newState.ips.v6.history[key] += data.ips.v6.conv[key]
+          : newState.ips.v6.history[key] = data.ips.v6.conv[key];
       });
     }
     let occurrences = helpers.countOccurrences(newState.ips.v6.history);

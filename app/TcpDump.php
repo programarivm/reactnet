@@ -32,7 +32,10 @@ class TcpDump implements MessageComponentInterface
                     json_encode([
                         'ips' => [
                             'v4' => (new TSharkZ(APP_PATH . "/var/tmp/z/conv/ip/$n.txt"))->convIp(),
-                            'v6' => (new TSharkZ(APP_PATH . "/var/tmp/z/conv/ipv6/$n.txt"))->convIpv6(),
+                            'v6' => [
+                                'conv' => (new TSharkZ(APP_PATH . "/var/tmp/z/conv/ipv6/$n.txt"))->convIpv6(),
+                                'endpoints' => (new TSharkZ(APP_PATH . "/var/tmp/z/endpoints/ipv6/$n.txt"))->convIpv6(),
+                            ],
                         ],
                         'protocols' => (new TSharkZ(APP_PATH . "/var/tmp/z/io/phs/$n.txt"))->ioPhs(),
                     ])
