@@ -16,9 +16,9 @@ class App extends Component {
       n: 0,
       ips: {
         v4: {
-          history: {},
           chart: {
             occurrences: {
+              history: {},
               labels: [],
               datasets: [
                 {
@@ -31,9 +31,9 @@ class App extends Component {
           }
         },
         v6: {
-          history: {},
           chart: {
             occurrences: {
+              history: {},
               labels: [],
               datasets: [
                 {
@@ -99,37 +99,37 @@ class App extends Component {
   }
 
   calcIpv4(newState, data) {
-    if (Object.keys(newState.ips.v4.history).length === 0) {
-      newState.ips.v4.history = data.ips.v4.conv;
+    if (Object.keys(newState.ips.v4.chart.occurrences.history).length === 0) {
+      newState.ips.v4.chart.occurrences.history = data.ips.v4.conv;
     } else {
       Object.keys(data.ips.v4.conv).forEach((key) => {
-        newState.ips.v4.history.hasOwnProperty(key)
-          ? newState.ips.v4.history[key] += data.ips.v4.conv[key]
-          : newState.ips.v4.history[key] = data.ips.v4.conv[key];
+        newState.ips.v4.chart.occurrences.history.hasOwnProperty(key)
+          ? newState.ips.v4.chart.occurrences.history[key] += data.ips.v4.conv[key]
+          : newState.ips.v4.chart.occurrences.history[key] = data.ips.v4.conv[key];
       });
     }
-    let occurrences = helpers.countOccurrences(newState.ips.v4.history);
+    let occurrences = helpers.countOccurrences(newState.ips.v4.chart.occurrences.history);
     newState.ips.v4.chart.occurrences.labels = Object.values(occurrences);
     newState.ips.v4.chart.occurrences.datasets[0].data = Object.keys(occurrences);
     newState.ips.v4.chart.occurrences.datasets[0].backgroundColor.push('#'+Math.floor(Math.random()*16777215).toString(16));
-    newState.ips.v4.history = helpers.sortObject(newState.ips.v4.history);
+    newState.ips.v4.chart.occurrences.history = helpers.sortObject(newState.ips.v4.chart.occurrences.history);
   }
 
   calcIpv6(newState, data) {
-    if (Object.keys(newState.ips.v6.history).length === 0) {
-      newState.ips.v6.history = data.ips.v6.conv;
+    if (Object.keys(newState.ips.v6.chart.occurrences.history).length === 0) {
+      newState.ips.v6.chart.occurrences.history = data.ips.v6.conv;
     } else {
       Object.keys(data.ips.v6.conv).forEach((key) => {
-        newState.ips.v6.history.hasOwnProperty(key)
-          ? newState.ips.v6.history[key] += data.ips.v6.conv[key]
-          : newState.ips.v6.history[key] = data.ips.v6.conv[key];
+        newState.ips.v6.chart.occurrences.history.hasOwnProperty(key)
+          ? newState.ips.v6.chart.occurrences.history[key] += data.ips.v6.conv[key]
+          : newState.ips.v6.chart.occurrences.history[key] = data.ips.v6.conv[key];
       });
     }
-    let occurrences = helpers.countOccurrences(newState.ips.v6.history);
+    let occurrences = helpers.countOccurrences(newState.ips.v6.chart.occurrences.history);
     newState.ips.v6.chart.occurrences.labels = Object.values(occurrences);
     newState.ips.v6.chart.occurrences.datasets[0].data = Object.keys(occurrences);
     newState.ips.v6.chart.occurrences.datasets[0].backgroundColor.push('#'+Math.floor(Math.random()*16777215).toString(16));
-    newState.ips.v6.history = helpers.sortObject(newState.ips.v6.history);
+    newState.ips.v6.chart.occurrences.history = helpers.sortObject(newState.ips.v6.chart.occurrences.history);
   }
 
   calcProtocols(newState, data) {

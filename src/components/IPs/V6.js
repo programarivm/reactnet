@@ -43,10 +43,10 @@ class V6 extends React.Component {
                       </thead>
                       <tbody>
                           {
-                            Object.keys(this.props.stats.ips.v6.history).map((item, index) => {
+                            Object.keys(this.props.stats.ips.v6.chart.occurrences.history).map((item, index) => {
                               return (<tr key={index}>
                                 <td>{item}</td>
-                                <td>{this.props.stats.ips.v6.history[item]}</td>
+                                <td>{this.props.stats.ips.v6.chart.occurrences.history[item]}</td>
                               </tr>)
                             })
                           }
