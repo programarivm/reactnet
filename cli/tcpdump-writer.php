@@ -19,6 +19,7 @@ Dir::make(APP_PATH . '/var/tmp/z/conv', 0775, $argv[2]);
 Dir::make(APP_PATH . '/var/tmp/z/conv/ip', 0775, $argv[2]);
 Dir::make(APP_PATH . '/var/tmp/z/conv/ipv6', 0775, $argv[2]);
 Dir::make(APP_PATH . '/var/tmp/z/endpoints', 0775, $argv[2]);
+Dir::make(APP_PATH . '/var/tmp/z/endpoints/ip', 0775, $argv[2]);
 Dir::make(APP_PATH . '/var/tmp/z/endpoints/ipv6', 0775, $argv[2]);
 Dir::make(APP_PATH . '/var/tmp/z/io', 0775, $argv[2]);
 Dir::make(APP_PATH . '/var/tmp/z/io/phs', 0775, $argv[2]);
@@ -28,12 +29,14 @@ while (true) {
     $pcap = APP_PATH . "/var/tmp/pcap/$n.pcap";
     $zConvIp = APP_PATH . "/var/tmp/z/conv/ip/$n.txt";
     $zConvIpv6 = APP_PATH . "/var/tmp/z/conv/ipv6/$n.txt";
+    $zEndpointsIp = APP_PATH . "/var/tmp/z/endpoints/ip/$n.txt";
     $zEndpointsIpv6 = APP_PATH . "/var/tmp/z/endpoints/ipv6/$n.txt";
     $zIoPhs = APP_PATH . "/var/tmp/z/io/phs/$n.txt";
     exec("tcpdump -i {$argv[1]} -c1000 -nn -w $pcap");
     if (file_exists($pcap)) {
         exec("tshark -r $pcap -q -z conv,ip > $zConvIp");
         exec("tshark -r $pcap -q -z conv,ipv6 > $zConvIpv6");
+        exec("tshark -r $pcap -q -z endpoints,ip > $zEndpointsIp");
         exec("tshark -r $pcap -q -z endpoints,ipv6 > $zEndpointsIpv6");
         exec("tshark -r $pcap -q -z io,phs > $zIoPhs");
         $n++;

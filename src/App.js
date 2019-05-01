@@ -100,12 +100,12 @@ class App extends Component {
 
   calcIpv4(newState, data) {
     if (Object.keys(newState.ips.v4.history).length === 0) {
-      newState.ips.v4.history = data.ips.v4;
+      newState.ips.v4.history = data.ips.v4.conv;
     } else {
-      Object.keys(data.ips.v4).forEach((key) => {
+      Object.keys(data.ips.v4.conv).forEach((key) => {
         newState.ips.v4.history.hasOwnProperty(key)
-          ? newState.ips.v4.history[key] += data.ips.v4[key]
-          : newState.ips.v4.history[key] = data.ips.v4[key];
+          ? newState.ips.v4.history[key] += data.ips.v4.conv[key]
+          : newState.ips.v4.history[key] = data.ips.v4.conv[key];
       });
     }
     let occurrences = helpers.countOccurrences(newState.ips.v4.history);
