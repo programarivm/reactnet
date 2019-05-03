@@ -42,6 +42,17 @@ class App extends Component {
                   label: 'IPs'
                 }
               ]
+            },
+            endpoints: {
+              history: [],
+              labels: [],
+              datasets: [
+                {
+                  data: [],
+                  backgroundColor: [],
+                  label: 'IPs'
+                }
+              ]
             }
           }
         }
@@ -96,6 +107,31 @@ class App extends Component {
       console.log('disconnected');
       // TODO ...
     };
+  }
+
+  calcEndpointsIpv6(newState, data) {
+    if (newState.ips.v6.chart.endpoints.history.length === 0) {
+      newState.ips.v6.chart.endpoints.history = data.ips.v6.endpoints;
+    } else {
+      for (let endpoint of data.ips.v6.endpoints) {
+        let exists = false;
+        for (let history of newState.ips.v6.chart.endpoints.history) {
+          if (history.ip === endpoint.ip) {
+            history.packets = +history.packets + +endpoint.packets;
+            history.bytes = +history.bytes + +endpoint.bytes;
+            history.tx_packets = +history.tx_packets + +endpoint.tx_packets;
+            history.tx_bytes = +history.tx_bytes + +endpoint.tx_bytes;
+            history.rx_packets = +history.rx_packets + +endpoint.rx_packets;
+            history.rx_bytes = +history.rx_bytes + +endpoint.rx_bytes;
+            exists = true;
+            break;
+          }
+        }
+        if (!exists) {
+          newState.ips.v6.chart.endpoints.history.push(endpoint);
+        }
+      }
+    }
   }
 
   calcIpv4(newState, data) {
@@ -163,6 +199,7 @@ class App extends Component {
 
   calcStats(data) {
     let newState = Object.assign({}, this.state);
+    this.calcEndpointsIpv6(newState, data);
     this.calcIpv4(newState, data);
     this.calcIpv6(newState, data);
     this.calcProtocols(newState, data);

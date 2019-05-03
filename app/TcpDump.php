@@ -33,11 +33,11 @@ class TcpDump implements MessageComponentInterface
                         'ips' => [
                             'v4' => [
                                 'conv' => (new TSharkZ(APP_PATH . "/var/tmp/z/conv/ip/$n.txt"))->convIp(),
-                                'endpoints' => (new TSharkZ(APP_PATH . "/var/tmp/z/endpoints/ip/$n.txt"))->convIp(),
+                                'endpoints' => (new TSharkZ(APP_PATH . "/var/tmp/z/endpoints/ip/$n.txt"))->endpointsIp(),
                             ],
                             'v6' => [
                                 'conv' => (new TSharkZ(APP_PATH . "/var/tmp/z/conv/ipv6/$n.txt"))->convIpv6(),
-                                'endpoints' => (new TSharkZ(APP_PATH . "/var/tmp/z/endpoints/ipv6/$n.txt"))->convIpv6(),
+                                'endpoints' => (new TSharkZ(APP_PATH . "/var/tmp/z/endpoints/ipv6/$n.txt"))->endpointsIpv6(),
                             ],
                         ],
                         'protocols' => (new TSharkZ(APP_PATH . "/var/tmp/z/io/phs/$n.txt"))->ioPhs(),
