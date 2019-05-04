@@ -134,20 +134,20 @@ class App extends Component {
     };
   }
 
-  calcEndpointsIpv6(newState, data) {
-    newState.ips.v6.chart.endpoints.labels = [];
-    newState.ips.v6.chart.endpoints.datasets[0].data = [];
-    newState.ips.v6.chart.endpoints.datasets[1].data = [];
-    newState.ips.v6.chart.endpoints.datasets[2].data = [];
-    newState.ips.v6.chart.endpoints.datasets[3].data = [];
-    newState.ips.v6.chart.endpoints.datasets[4].data = [];
-    newState.ips.v6.chart.endpoints.datasets[5].data = [];
-    if (newState.ips.v6.chart.endpoints.history.length === 0) {
-      newState.ips.v6.chart.endpoints.history = data.ips.v6.endpoints;
+  calcEndpointsIpv6(endpoints, data) {
+    if (endpoints.history.length === 0) {
+      endpoints.history = data.ips.v6.endpoints;
     } else {
+      endpoints.labels = [];
+      endpoints.datasets[0].data = [];
+      endpoints.datasets[1].data = [];
+      endpoints.datasets[2].data = [];
+      endpoints.datasets[3].data = [];
+      endpoints.datasets[4].data = [];
+      endpoints.datasets[5].data = [];
       for (let endpoint of data.ips.v6.endpoints) {
         let exists = false;
-        for (let history of newState.ips.v6.chart.endpoints.history) {
+        for (let history of endpoints.history) {
           if (history.ip === endpoint.ip) {
             history.packets = +history.packets + +endpoint.packets;
             history.bytes = +history.bytes + +endpoint.bytes;
@@ -160,95 +160,97 @@ class App extends Component {
           }
         }
         if (!exists) {
-          newState.ips.v6.chart.endpoints.history.push(endpoint);
+          endpoints.history.push(endpoint);
         }
       }
-      newState.ips.v6.chart.endpoints.history.sort(function (a, b) {
+      endpoints.history.sort(function (a, b) {
         return b.bytes - a.bytes;
       });
       // the twenty busiest endpoints
       for (let i = 0; i < 20; i++) {
-        let item = newState.ips.v6.chart.endpoints.history[i];
-        newState.ips.v6.chart.endpoints.labels.push(item.ip);
-        newState.ips.v6.chart.endpoints.datasets[0].data.push(item.packets);
-        newState.ips.v6.chart.endpoints.datasets[1].data.push(item.bytes);
-        newState.ips.v6.chart.endpoints.datasets[2].data.push(item.tx_packets);
-        newState.ips.v6.chart.endpoints.datasets[3].data.push(item.tx_bytes);
-        newState.ips.v6.chart.endpoints.datasets[4].data.push(item.rx_packets);
-        newState.ips.v6.chart.endpoints.datasets[5].data.push(item.rx_bytes);
+        let item = endpoints.history[i];
+        if (item !== undefined) {
+          endpoints.labels.push(item.ip);
+          endpoints.datasets[0].data.push(item.packets);
+          endpoints.datasets[1].data.push(item.bytes);
+          endpoints.datasets[2].data.push(item.tx_packets);
+          endpoints.datasets[3].data.push(item.tx_bytes);
+          endpoints.datasets[4].data.push(item.rx_packets);
+          endpoints.datasets[5].data.push(item.rx_bytes);
+        }
       }
     }
   }
 
-  calcIpv4(newState, data) {
-    if (Object.keys(newState.ips.v4.chart.occurrences.history).length === 0) {
-      newState.ips.v4.chart.occurrences.history = data.ips.v4.conv;
+  calcIpv4(occurrences, data) {
+    if (Object.keys(occurrences.history).length === 0) {
+      occurrences.history = data.ips.v4.conv;
     } else {
       Object.keys(data.ips.v4.conv).forEach((key) => {
-        newState.ips.v4.chart.occurrences.history.hasOwnProperty(key)
-          ? newState.ips.v4.chart.occurrences.history[key] += data.ips.v4.conv[key]
-          : newState.ips.v4.chart.occurrences.history[key] = data.ips.v4.conv[key];
+        occurrences.history.hasOwnProperty(key)
+          ? occurrences.history[key] += data.ips.v4.conv[key]
+          : occurrences.history[key] = data.ips.v4.conv[key];
       });
     }
-    let occurrences = helpers.countOccurrences(newState.ips.v4.chart.occurrences.history);
-    newState.ips.v4.chart.occurrences.labels = Object.values(occurrences);
-    newState.ips.v4.chart.occurrences.datasets[0].data = Object.keys(occurrences);
-    newState.ips.v4.chart.occurrences.datasets[0].backgroundColor.push('#'+Math.floor(Math.random()*16777215).toString(16));
-    newState.ips.v4.chart.occurrences.history = helpers.sortObject(newState.ips.v4.chart.occurrences.history);
+    let items = helpers.countOccurrences(occurrences.history);
+    occurrences.labels = Object.values(items);
+    occurrences.datasets[0].data = Object.keys(items);
+    occurrences.datasets[0].backgroundColor.push('#'+Math.floor(Math.random()*16777215).toString(16));
+    occurrences.history = helpers.sortObject(occurrences.history);
   }
 
-  calcIpv6(newState, data) {
-    if (Object.keys(newState.ips.v6.chart.occurrences.history).length === 0) {
-      newState.ips.v6.chart.occurrences.history = data.ips.v6.conv;
+  calcIpv6(occurrences, data) {
+    if (Object.keys(occurrences.history).length === 0) {
+      occurrences.history = data.ips.v6.conv;
     } else {
       Object.keys(data.ips.v6.conv).forEach((key) => {
-        newState.ips.v6.chart.occurrences.history.hasOwnProperty(key)
-          ? newState.ips.v6.chart.occurrences.history[key] += data.ips.v6.conv[key]
-          : newState.ips.v6.chart.occurrences.history[key] = data.ips.v6.conv[key];
+        occurrences.history.hasOwnProperty(key)
+          ? occurrences.history[key] += data.ips.v6.conv[key]
+          : occurrences.history[key] = data.ips.v6.conv[key];
       });
     }
-    let occurrences = helpers.countOccurrences(newState.ips.v6.chart.occurrences.history);
-    newState.ips.v6.chart.occurrences.labels = Object.values(occurrences);
-    newState.ips.v6.chart.occurrences.datasets[0].data = Object.keys(occurrences);
-    newState.ips.v6.chart.occurrences.datasets[0].backgroundColor.push('#'+Math.floor(Math.random()*16777215).toString(16));
-    newState.ips.v6.chart.occurrences.history = helpers.sortObject(newState.ips.v6.chart.occurrences.history);
+    let items = helpers.countOccurrences(occurrences.history);
+    occurrences.labels = Object.values(items);
+    occurrences.datasets[0].data = Object.keys(items);
+    occurrences.datasets[0].backgroundColor.push('#'+Math.floor(Math.random()*16777215).toString(16));
+    occurrences.history = helpers.sortObject(occurrences.history);
   }
 
-  calcProtocols(newState, data) {
-    newState.protocols.chart.bytes.labels = [];
-    newState.protocols.chart.frames.labels = [];
-    newState.protocols.chart.bytes.datasets[0].data = [];
-    newState.protocols.chart.frames.datasets[0].data = [];
+  calcProtocols(protocols, data) {
+    protocols.chart.bytes.labels = [];
+    protocols.chart.frames.labels = [];
+    protocols.chart.bytes.datasets[0].data = [];
+    protocols.chart.frames.datasets[0].data = [];
     for (let item of data.protocols) {
       let exists = false;
-      for (let protocol of newState.protocols.tshark) {
+      for (let protocol of protocols.tshark) {
         if (item.name === protocol.name && item.level === protocol.level && item.parent_name === protocol.parent_name) {
           protocol.bytes = parseInt(protocol.bytes) + parseInt(item.bytes);
           protocol.frames = parseInt(protocol.frames) + parseInt(item.frames);
-          newState.protocols.chart.bytes.labels.push(protocol.name);
-          newState.protocols.chart.frames.labels.push(protocol.name);
-          newState.protocols.chart.bytes.datasets[0].data.push(protocol.bytes);
-          newState.protocols.chart.frames.datasets[0].data.push(protocol.frames);
+          protocols.chart.bytes.labels.push(protocol.name);
+          protocols.chart.frames.labels.push(protocol.name);
+          protocols.chart.bytes.datasets[0].data.push(protocol.bytes);
+          protocols.chart.frames.datasets[0].data.push(protocol.frames);
           exists = true;
           break;
         }
       }
       if (!exists) {
-        newState.protocols.tshark.push(item);
-        newState.protocols.chart.bytes.labels.push(item.name);
-        newState.protocols.chart.frames.labels.push(item.name);
-        newState.protocols.chart.bytes.datasets[0].data.push(item.bytes);
-        newState.protocols.chart.frames.datasets[0].data.push(item.frames);
+        protocols.tshark.push(item);
+        protocols.chart.bytes.labels.push(item.name);
+        protocols.chart.frames.labels.push(item.name);
+        protocols.chart.bytes.datasets[0].data.push(item.bytes);
+        protocols.chart.frames.datasets[0].data.push(item.frames);
       }
     }
   }
 
   calcStats(data) {
     let newState = Object.assign({}, this.state);
-    this.calcEndpointsIpv6(newState, data);
-    this.calcIpv4(newState, data);
-    this.calcIpv6(newState, data);
-    this.calcProtocols(newState, data);
+    this.calcEndpointsIpv6(newState.ips.v6.chart.endpoints, data);
+    this.calcIpv4(newState.ips.v4.chart.occurrences, data);
+    this.calcIpv6(newState.ips.v6.chart.occurrences, data);
+    this.calcProtocols(newState.protocols, data);
     this.setState(newState);
   }
 
