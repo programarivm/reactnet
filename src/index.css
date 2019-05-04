@@ -19,7 +19,8 @@ ul.protocol-tree {
   font-size: 13px;
 }
 
-.ip-occurrences {
+.ip-occurrences,
+.ip-endpoints {
   font-size: 12px;
   height: 400px;
   overflow-y: scroll;

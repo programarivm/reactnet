@@ -64,10 +64,42 @@ class V6 extends React.Component {
               </Card>
               <Card body className="mt-3">
                 <h4>Endpoints</h4>
-                <p>Lists all endpoints that can be seen in the capture -- ordered by number of bytes per endpoint.</p>
+                <p>Endpoints that can be seen in the capture ordered by number of bytes.</p>
                 <Row>
                   <Col lg="12">
-                    <HorizontalBar data={this.props.stats.ips.v6.chart.endpoints} height={this.props.stats.ips.v6.chart.endpoints.history.length * 25} width={null} options={horizontal} redraw />
+                    <HorizontalBar data={this.props.stats.ips.v6.chart.endpoints} height={350} width={null} options={horizontal} redraw />
+                  </Col>
+                  <Col lg="12" className="ip-endpoints">
+                    <Table>
+                      <thead>
+                        <tr>
+                          <th></th>
+                          <th>IP</th>
+                          <th>Packets</th>
+                          <th>Bytes</th>
+                          <th>TX packets</th>
+                          <th>TX bytes</th>
+                          <th>RX packets</th>
+                          <th>RX bytes</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                          {
+                            this.props.stats.ips.v6.chart.endpoints.history.map((item, index) => {
+                              return (<tr key={index}>
+                                <td>{index + 1}</td>
+                                <td>{item.ip}</td>
+                                <td>{item.packets}</td>
+                                <td>{item.bytes}</td>
+                                <td>{item.tx_packets}</td>
+                                <td>{item.tx_bytes}</td>
+                                <td>{item.rx_packets}</td>
+                                <td>{item.rx_bytes}</td>
+                              </tr>)
+                            })
+                          }
+                      </tbody>
+                    </Table>
                   </Col>
                 </Row>
               </Card>

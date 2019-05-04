@@ -166,14 +166,16 @@ class App extends Component {
       newState.ips.v6.chart.endpoints.history.sort(function (a, b) {
         return b.bytes - a.bytes;
       });
-      for (let history of newState.ips.v6.chart.endpoints.history) {
-        newState.ips.v6.chart.endpoints.labels.push(history.ip);
-        newState.ips.v6.chart.endpoints.datasets[0].data.push(history.packets);
-        newState.ips.v6.chart.endpoints.datasets[1].data.push(history.bytes);
-        newState.ips.v6.chart.endpoints.datasets[2].data.push(history.tx_packets);
-        newState.ips.v6.chart.endpoints.datasets[3].data.push(history.tx_bytes);
-        newState.ips.v6.chart.endpoints.datasets[4].data.push(history.rx_packets);
-        newState.ips.v6.chart.endpoints.datasets[5].data.push(history.rx_bytes);
+      // the twenty busiest endpoints
+      for (let i = 0; i < 20; i++) {
+        let item = newState.ips.v6.chart.endpoints.history[i];
+        newState.ips.v6.chart.endpoints.labels.push(item.ip);
+        newState.ips.v6.chart.endpoints.datasets[0].data.push(item.packets);
+        newState.ips.v6.chart.endpoints.datasets[1].data.push(item.bytes);
+        newState.ips.v6.chart.endpoints.datasets[2].data.push(item.tx_packets);
+        newState.ips.v6.chart.endpoints.datasets[3].data.push(item.tx_bytes);
+        newState.ips.v6.chart.endpoints.datasets[4].data.push(item.rx_packets);
+        newState.ips.v6.chart.endpoints.datasets[5].data.push(item.rx_bytes);
       }
     }
   }
