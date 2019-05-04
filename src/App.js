@@ -48,9 +48,34 @@ class App extends Component {
               labels: [],
               datasets: [
                 {
-                  data: [],
-                  backgroundColor: [],
-                  label: 'IPs'
+                  label: 'Packets',
+                  backgroundColor: '#34877a',
+                  data: []
+                },
+                {
+                  label: 'Bytes',
+                  backgroundColor: '#2e796d',
+                  data: []
+                },
+                {
+                  label: 'TX packets',
+                  backgroundColor: '#296c61',
+                  data: []
+                },
+                {
+                  label: 'TX bytes',
+                  backgroundColor: '#245e55',
+                  data: []
+                },
+                {
+                  label: 'RX packets',
+                  backgroundColor: '#1f5149',
+                  data: []
+                },
+                {
+                  label: 'RX bytes',
+                  backgroundColor: '#1a433d',
+                  data: []
                 }
               ]
             }
@@ -110,6 +135,13 @@ class App extends Component {
   }
 
   calcEndpointsIpv6(newState, data) {
+    newState.ips.v6.chart.endpoints.labels = [];
+    newState.ips.v6.chart.endpoints.datasets[0].data = [];
+    newState.ips.v6.chart.endpoints.datasets[1].data = [];
+    newState.ips.v6.chart.endpoints.datasets[2].data = [];
+    newState.ips.v6.chart.endpoints.datasets[3].data = [];
+    newState.ips.v6.chart.endpoints.datasets[4].data = [];
+    newState.ips.v6.chart.endpoints.datasets[5].data = [];
     if (newState.ips.v6.chart.endpoints.history.length === 0) {
       newState.ips.v6.chart.endpoints.history = data.ips.v6.endpoints;
     } else {
@@ -130,6 +162,18 @@ class App extends Component {
         if (!exists) {
           newState.ips.v6.chart.endpoints.history.push(endpoint);
         }
+      }
+      newState.ips.v6.chart.endpoints.history.sort(function (a, b) {
+        return b.bytes - a.bytes;
+      });
+      for (let history of newState.ips.v6.chart.endpoints.history) {
+        newState.ips.v6.chart.endpoints.labels.push(history.ip);
+        newState.ips.v6.chart.endpoints.datasets[0].data.push(history.packets);
+        newState.ips.v6.chart.endpoints.datasets[1].data.push(history.bytes);
+        newState.ips.v6.chart.endpoints.datasets[2].data.push(history.tx_packets);
+        newState.ips.v6.chart.endpoints.datasets[3].data.push(history.tx_bytes);
+        newState.ips.v6.chart.endpoints.datasets[4].data.push(history.rx_packets);
+        newState.ips.v6.chart.endpoints.datasets[5].data.push(history.rx_bytes);
       }
     }
   }

@@ -8,14 +8,18 @@ import {
   Col,
   Table
 } from 'reactstrap';
-import {Polar} from 'react-chartjs-2';
+import {HorizontalBar, Polar} from 'react-chartjs-2';
 
-const options = {
+const polar = {
   animation: {
     animateRotate: false,
     animateScale: true,
     easing: 'easeOutQuad'
   }
+};
+
+const horizontal = {
+  aspectRatio: 1
 };
 
 class V6 extends React.Component {
@@ -54,7 +58,16 @@ class V6 extends React.Component {
                     </Table>
                   </Col>
                   <Col lg="8">
-                    <Polar data={this.props.stats.ips.v6.chart.occurrences} options={options} redraw />
+                    <Polar data={this.props.stats.ips.v6.chart.occurrences} options={polar} redraw />
+                  </Col>
+                </Row>
+              </Card>
+              <Card body className="mt-3">
+                <h4>Endpoints</h4>
+                <p>Lists all endpoints that can be seen in the capture -- ordered by number of bytes per endpoint.</p>
+                <Row>
+                  <Col lg="12">
+                    <HorizontalBar data={this.props.stats.ips.v6.chart.endpoints} height={this.props.stats.ips.v6.chart.endpoints.history.length * 25} width={null} options={horizontal} redraw />
                   </Col>
                 </Row>
               </Card>
