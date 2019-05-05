@@ -8,14 +8,18 @@ import {
   Col,
   Table
 } from 'reactstrap';
-import {Polar} from 'react-chartjs-2';
+import {HorizontalBar, Polar} from 'react-chartjs-2';
 
-const options = {
+const polar = {
   animation: {
     animateRotate: false,
     animateScale: true,
     easing: 'easeOutQuad'
   }
+};
+
+const horizontal = {
+  aspectRatio: 1
 };
 
 class V4 extends React.Component {
@@ -54,7 +58,48 @@ class V4 extends React.Component {
                     </Table>
                   </Col>
                   <Col lg="8">
-                    <Polar data={this.props.stats.ips.v4.chart.occurrences} options={options} redraw />
+                    <Polar data={this.props.stats.ips.v4.chart.occurrences} options={polar} redraw />
+                  </Col>
+                </Row>
+              </Card>
+              <Card body className="mt-3">
+                <h4>Endpoints</h4>
+                <p>Endpoints that can be seen in the capture ordered by number of bytes.</p>
+                <Row>
+                  <Col lg="12">
+                    <HorizontalBar data={this.props.stats.ips.v4.chart.endpoints} height={350} width={null} options={horizontal} redraw />
+                  </Col>
+                  <Col lg="12" className="ip-endpoints">
+                    <Table>
+                      <thead>
+                        <tr>
+                          <th></th>
+                          <th>IP</th>
+                          <th>Packets</th>
+                          <th>Bytes</th>
+                          <th>TX packets</th>
+                          <th>TX bytes</th>
+                          <th>RX packets</th>
+                          <th>RX bytes</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                          {
+                            this.props.stats.ips.v4.chart.endpoints.history.map((item, index) => {
+                              return (<tr key={index}>
+                                <td>{index + 1}</td>
+                                <td>{item.ip}</td>
+                                <td>{item.packets}</td>
+                                <td>{item.bytes}</td>
+                                <td>{item.tx_packets}</td>
+                                <td>{item.tx_bytes}</td>
+                                <td>{item.rx_packets}</td>
+                                <td>{item.rx_bytes}</td>
+                              </tr>)
+                            })
+                          }
+                      </tbody>
+                    </Table>
                   </Col>
                 </Row>
               </Card>

@@ -27,6 +27,42 @@ class App extends Component {
                   label: 'IPs'
                 }
               ]
+            },
+            endpoints: {
+              history: [],
+              labels: [],
+              datasets: [
+                {
+                  label: 'Packets',
+                  backgroundColor: '#34877a',
+                  data: []
+                },
+                {
+                  label: 'Bytes',
+                  backgroundColor: '#2e796d',
+                  data: []
+                },
+                {
+                  label: 'TX packets',
+                  backgroundColor: '#296c61',
+                  data: []
+                },
+                {
+                  label: 'TX bytes',
+                  backgroundColor: '#245e55',
+                  data: []
+                },
+                {
+                  label: 'RX packets',
+                  backgroundColor: '#1f5149',
+                  data: []
+                },
+                {
+                  label: 'RX bytes',
+                  backgroundColor: '#1a433d',
+                  data: []
+                }
+              ]
             }
           }
         },
@@ -137,6 +173,7 @@ class App extends Component {
   stats(data) {
     let newState = Object.assign({}, this.state);
     calc.ips.v4.chart.occurrences(newState.ips.v4.chart.occurrences, data);
+    calc.ips.v4.chart.endpoints(newState.ips.v4.chart.endpoints, data);
     calc.ips.v6.chart.occurrences(newState.ips.v6.chart.occurrences, data);
     calc.ips.v6.chart.endpoints(newState.ips.v6.chart.endpoints, data);
     calc.protocols(newState.protocols, data);

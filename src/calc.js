@@ -19,9 +19,56 @@ const calc = {
           obj.datasets[0].data = Object.keys(items);
           obj.datasets[0].backgroundColor.push('#'+Math.floor(Math.random()*16777215).toString(16));
           obj.history = helpers.sortObject(obj.history);
+        },
+        endpoints: function(obj, data) {
+          if (obj.history.length === 0) {
+            obj.history = data.ips.v4.endpoints;
+          } else {
+            obj.labels = [];
+            obj.datasets[0].data = [];
+            obj.datasets[1].data = [];
+            obj.datasets[2].data = [];
+            obj.datasets[3].data = [];
+            obj.datasets[4].data = [];
+            obj.datasets[5].data = [];
+            for (let endpoint of data.ips.v4.endpoints) {
+              let exists = false;
+              for (let history of obj.history) {
+                if (history.ip === endpoint.ip) {
+                  history.packets = +history.packets + +endpoint.packets;
+                  history.bytes = +history.bytes + +endpoint.bytes;
+                  history.tx_packets = +history.tx_packets + +endpoint.tx_packets;
+                  history.tx_bytes = +history.tx_bytes + +endpoint.tx_bytes;
+                  history.rx_packets = +history.rx_packets + +endpoint.rx_packets;
+                  history.rx_bytes = +history.rx_bytes + +endpoint.rx_bytes;
+                  exists = true;
+                  break;
+                }
+              }
+              if (!exists) {
+                obj.history.push(endpoint);
+              }
+            }
+            obj.history.sort(function (a, b) {
+              return b.bytes - a.bytes;
+            });
+            // the twenty busiest endpoints
+            for (let i = 0; i < 20; i++) {
+              let item = obj.history[i];
+              if (item !== undefined) {
+                obj.labels.push(item.ip);
+                obj.datasets[0].data.push(item.packets);
+                obj.datasets[1].data.push(item.bytes);
+                obj.datasets[2].data.push(item.tx_packets);
+                obj.datasets[3].data.push(item.tx_bytes);
+                obj.datasets[4].data.push(item.rx_packets);
+                obj.datasets[5].data.push(item.rx_bytes);
+              }
+            }
           }
         }
-      },
+      }
+    },
     v6: {
       chart: {
         occurrences: function(obj, data) {
