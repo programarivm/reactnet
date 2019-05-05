@@ -13,14 +13,15 @@ class TcpDump implements MessageComponentInterface
 
     public function __construct()
     {
-        echo 'New TcpDump server listening...' . PHP_EOL;
+        echo 'TcpDump server listening...' . PHP_EOL;
     }
 
     public function onOpen(ConnectionInterface $conn)
     {
-        $this->client = $conn;
-
-        echo "New connection! ({$conn->resourceId})" . PHP_EOL;
+        if (!isset($this->client)) {
+            $this->client = $conn;
+            echo "Client connected! ({$conn->resourceId})" . PHP_EOL;
+        }
     }
 
     public function onMessage(ConnectionInterface $from, $n)
@@ -57,6 +58,8 @@ class TcpDump implements MessageComponentInterface
 
     public function onClose(ConnectionInterface $conn)
     {
+        unset($this->client);
+
         echo "Connection {$conn->resourceId} has disconnected" . PHP_EOL;
     }
 
