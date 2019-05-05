@@ -44,7 +44,10 @@ class TcpDump implements MessageComponentInterface
                     ])
                 );
                 unlink(APP_PATH . "/var/tmp/pcap/$n.pcap");
+                unlink(APP_PATH . "/var/tmp/z/conv/ip/$n.txt");
+                unlink(APP_PATH . "/var/tmp/z/endpoints/ip/$n.txt");
                 unlink(APP_PATH . "/var/tmp/z/conv/ipv6/$n.txt");
+                unlink(APP_PATH . "/var/tmp/z/endpoints/ipv6/$n.txt");
                 unlink(APP_PATH . "/var/tmp/z/io/phs/$n.txt");
             }
         } else {
