@@ -5,11 +5,14 @@ import {
   NavbarToggler,
   NavbarBrand,
   Nav,
+  NavItem,
+  NavLink,
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem } from 'reactstrap';
-import { Link, Route } from 'react-router-dom';
+import { Link, Route, Redirect } from 'react-router-dom';
+import { Dashboard } from "./Dashboard.js";
 import { V4 as Ipv4 } from "./IPs/V4.js";
 import { V6 as Ipv6 } from "./IPs/V6.js";
 import { All as AllProtocols } from "./Protocols/All.js";
@@ -32,10 +35,17 @@ class NavBar extends React.Component {
     return (
       <div>
         <Navbar color="light" light expand="md">
-          <NavbarBrand href="/"><b>ReactNet</b></NavbarBrand>
+          <NavbarBrand tag={Link} to="/dashboard">
+            <b>ReactNet</b>
+          </NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
+              <NavItem>
+                <NavLink tag={Link} to="/dashboard">
+                  Dashboard
+                </NavLink>
+              </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
                   IP
@@ -62,6 +72,11 @@ class NavBar extends React.Component {
             </Nav>
           </Collapse>
         </Navbar>
+        <Route exact path="/" render={() => (<Redirect to="/dashboard" />)} />
+        <Route
+          path="/dashboard"
+          render={(props) => <Dashboard stats={this.props.stats} {...props} />}
+        />
         <Route
           path="/ips/v4"
           render={(props) => <Ipv4 stats={this.props.stats} {...props} />}
