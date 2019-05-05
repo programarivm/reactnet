@@ -6,9 +6,6 @@ import './App.css';
 const url = 'ws://localhost:3001';
 
 class App extends Component {
-
-  ws = new WebSocket(url);
-
   constructor(props) {
     super(props);
 
@@ -144,9 +141,12 @@ class App extends Component {
         }
       }
     };
+
+    this.handleConnect = this.handleConnect.bind(this);
   }
 
-  componentDidMount() {
+  handleConnect() {
+    this.ws = new WebSocket(url);
 
     this.ws.onopen = () => {
       this.ws.send(this.state.n);
@@ -183,7 +183,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <NavBar stats={this.state} />
+        <NavBar onConnect={this.handleConnect} stats={this.state} />
       </div>
     );
   }

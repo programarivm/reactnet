@@ -10,8 +10,14 @@ import {
 } from 'reactstrap';
 
 class Dashboard extends React.Component {
-  connect() {
-    console.log("Soon available! Please be patient.");
+  constructor(props) {
+    super(props);
+
+    this.handleConnect = this.handleConnect.bind(this);
+  }
+
+  handleConnect() {
+    this.props.onConnect();
   }
 
   render() {
@@ -25,7 +31,7 @@ class Dashboard extends React.Component {
               </Breadcrumb>
               <Card body>
                 <Col lg="12">
-                  <Button color="primary" onClick={this.connect}>Connect</Button>{' '}
+                  <Button color="primary" onClick={this.handleConnect}>Connect</Button>{' '}
                 </Col>
               </Card>
             </Col>

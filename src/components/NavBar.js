@@ -21,16 +21,24 @@ class NavBar extends React.Component {
   constructor(props) {
     super(props);
 
-    this.toggle = this.toggle.bind(this);
     this.state = {
       isOpen: false
     };
+
+    this.toggle = this.toggle.bind(this);
+    this.handleConnect = this.handleConnect.bind(this);
   }
+
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
     });
   }
+
+  handleConnect() {
+    this.props.onConnect();
+  }
+
   render() {
     return (
       <div>
@@ -75,7 +83,7 @@ class NavBar extends React.Component {
         <Route exact path="/" render={() => (<Redirect to="/dashboard" />)} />
         <Route
           path="/dashboard"
-          render={(props) => <Dashboard stats={this.props.stats} {...props} />}
+          render={(props) => <Dashboard onConnect={this.handleConnect} stats={this.props.stats} {...props} />}
         />
         <Route
           path="/ips/v4"
