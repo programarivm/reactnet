@@ -18,7 +18,7 @@ const polar = {
   }
 };
 
-const horizontal = {
+const horizontalBar = {
   aspectRatio: 1
 };
 
@@ -67,7 +67,7 @@ class V4 extends React.Component {
                 <p>Endpoints that can be seen in the capture ordered by number of bytes.</p>
                 <Row>
                   <Col lg="12">
-                    <HorizontalBar data={this.props.stats.ips.v4.chart.endpoints} height={350} width={null} options={horizontal} redraw />
+                    <HorizontalBar data={this.props.stats.ips.v4.chart.endpoints} height={350} width={null} options={horizontalBar} redraw />
                   </Col>
                   <Col lg="12" className="ip-endpoints">
                     <Table>

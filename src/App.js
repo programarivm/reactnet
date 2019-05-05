@@ -172,11 +172,11 @@ class App extends Component {
 
   stats(data) {
     let newState = Object.assign({}, this.state);
-    calc.ips.v4.chart.occurrences(newState.ips.v4.chart.occurrences, data);
-    calc.ips.v4.chart.endpoints(newState.ips.v4.chart.endpoints, data);
-    calc.ips.v6.chart.occurrences(newState.ips.v6.chart.occurrences, data);
-    calc.ips.v6.chart.endpoints(newState.ips.v6.chart.endpoints, data);
-    calc.protocols(newState.protocols, data);
+    calc.ips.v4.chart.occurrences(newState.ips.v4.chart.occurrences, data.ips.v4.conv);
+    calc.ips.v4.chart.endpoints(newState.ips.v4.chart.endpoints, data.ips.v4.endpoints);
+    calc.ips.v6.chart.occurrences(newState.ips.v6.chart.occurrences, data.ips.v6.conv);
+    calc.ips.v6.chart.endpoints(newState.ips.v6.chart.endpoints, data.ips.v6.endpoints);
+    calc.protocols(newState.protocols, data.protocols);
     this.setState(newState);
   }
 

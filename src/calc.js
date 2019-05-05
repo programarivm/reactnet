@@ -6,12 +6,10 @@ const calc = {
       chart: {
         occurrences: function(obj, data) {
           if (Object.keys(obj.history).length === 0) {
-            obj.history = data.ips.v4.conv;
+            obj.history = data;
           } else {
-            Object.keys(data.ips.v4.conv).forEach((key) => {
-              obj.history.hasOwnProperty(key)
-                ? obj.history[key] += data.ips.v4.conv[key]
-                : obj.history[key] = data.ips.v4.conv[key];
+            Object.keys(data).forEach((key) => {
+              obj.history.hasOwnProperty(key) ? obj.history[key] += data[key] : obj.history[key] = data[key];
             });
           }
           let items = helpers.countOccurrences(obj.history);
@@ -22,7 +20,7 @@ const calc = {
         },
         endpoints: function(obj, data) {
           if (obj.history.length === 0) {
-            obj.history = data.ips.v4.endpoints;
+            obj.history = data;
           } else {
             obj.labels = [];
             obj.datasets[0].data = [];
@@ -31,7 +29,7 @@ const calc = {
             obj.datasets[3].data = [];
             obj.datasets[4].data = [];
             obj.datasets[5].data = [];
-            for (let endpoint of data.ips.v4.endpoints) {
+            for (let endpoint of data) {
               let exists = false;
               for (let history of obj.history) {
                 if (history.ip === endpoint.ip) {
@@ -73,12 +71,10 @@ const calc = {
       chart: {
         occurrences: function(obj, data) {
           if (Object.keys(obj.history).length === 0) {
-            obj.history = data.ips.v6.conv;
+            obj.history = data;
           } else {
-            Object.keys(data.ips.v6.conv).forEach((key) => {
-              obj.history.hasOwnProperty(key)
-                ? obj.history[key] += data.ips.v6.conv[key]
-                : obj.history[key] = data.ips.v6.conv[key];
+            Object.keys(data).forEach((key) => {
+              obj.history.hasOwnProperty(key) ? obj.history[key] += data[key] : obj.history[key] = data[key];
             });
           }
           let items = helpers.countOccurrences(obj.history);
@@ -89,7 +85,7 @@ const calc = {
         },
         endpoints: function(obj, data) {
           if (obj.history.length === 0) {
-            obj.history = data.ips.v6.endpoints;
+            obj.history = data;
           } else {
             obj.labels = [];
             obj.datasets[0].data = [];
@@ -98,7 +94,7 @@ const calc = {
             obj.datasets[3].data = [];
             obj.datasets[4].data = [];
             obj.datasets[5].data = [];
-            for (let endpoint of data.ips.v6.endpoints) {
+            for (let endpoint of data) {
               let exists = false;
               for (let history of obj.history) {
                 if (history.ip === endpoint.ip) {
@@ -142,7 +138,7 @@ const calc = {
     obj.chart.frames.labels = [];
     obj.chart.bytes.datasets[0].data = [];
     obj.chart.frames.datasets[0].data = [];
-    for (let item of data.protocols) {
+    for (let item of data) {
       let exists = false;
       for (let protocol of obj.tshark) {
         if (item.name === protocol.name && item.level === protocol.level && item.parent_name === protocol.parent_name) {
