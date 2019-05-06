@@ -10,6 +10,7 @@ class App extends Component {
     super(props);
 
     this.state = {
+      connected: false,
       n: 0,
       ips: {
         v4: {
@@ -143,34 +144,45 @@ class App extends Component {
     };
 
     this.handleConnect = this.handleConnect.bind(this);
+    this.handleDisconnect = this.handleDisconnect.bind(this);
   }
 
   handleConnect() {
     this.ws = new WebSocket(url);
 
     this.ws.onopen = () => {
+      this.setState({
+        connected: true
+      });
       this.ws.send(this.state.n);
     };
 
     this.ws.onmessage = event => {
       if (event.data !== 'wait') {
-        this.stats(JSON.parse(event.data));
+        this.calc(JSON.parse(event.data));
         this.setState({
           n: this.state.n + 1
         });
       }
       setTimeout(() => {
+        if (this.state.connected) {
           this.ws.send(this.state.n);
+        }
       }, 5000);
     };
 
     this.ws.onclose = () => {
-      console.log('disconnected');
-      // TODO ...
+      this.setState({
+        connected: false
+      });
     };
   }
 
-  stats(data) {
+  handleDisconnect() {
+    this.ws.close();
+  }
+
+  calc(data) {
     let newState = Object.assign({}, this.state);
     calc.ips.v4.chart.occurrences(newState.ips.v4.chart.occurrences, data.ips.v4.conv);
     calc.ips.v4.chart.endpoints(newState.ips.v4.chart.endpoints, data.ips.v4.endpoints);
@@ -183,7 +195,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <NavBar onConnect={this.handleConnect} stats={this.state} />
+        <NavBar onConnect={this.handleConnect} onDisconnect={this.handleDisconnect} state={this.state} />
       </div>
     );
   }

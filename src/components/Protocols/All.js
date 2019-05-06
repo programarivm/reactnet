@@ -27,15 +27,15 @@ class All extends React.Component {
                   <Col lg="4">
                     <ul className="protocol-tree">
                       {
-                        this.props.stats.protocols.tshark.map(function(item, index) {
+                        this.props.state.protocols.tshark.map(function(item, index) {
                           return (<li key={index}>{'--'.repeat(item.level)} {item.name}</li>)
                         })
                       }
                     </ul>
                   </Col>
                   <Col lg="8">
-                    <HorizontalBar data={this.props.stats.protocols.chart.bytes} redraw />
-                    <HorizontalBar data={this.props.stats.protocols.chart.frames} redraw />
+                    <HorizontalBar data={this.props.state.protocols.chart.bytes} redraw />
+                    <HorizontalBar data={this.props.state.protocols.chart.frames} redraw />
                   </Col>
                 </Row>
               </Card>

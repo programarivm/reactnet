@@ -14,13 +14,24 @@ class Dashboard extends React.Component {
     super(props);
 
     this.handleConnect = this.handleConnect.bind(this);
+    this.handleDisconnect = this.handleDisconnect.bind(this);
   }
 
   handleConnect() {
     this.props.onConnect();
   }
 
+  handleDisconnect() {
+    this.props.onDisconnect();
+  }
+
   render() {
+    let button;
+    if (!this.props.state.connected) {
+      button = <Button color="primary" onClick={this.handleConnect}>Connect</Button>;
+    } else {
+      button = <Button color="primary" onClick={this.handleDisconnect}>Disconnect</Button>;
+    }
     return (
       <div>
         <Container>
@@ -31,7 +42,7 @@ class Dashboard extends React.Component {
               </Breadcrumb>
               <Card body>
                 <Col lg="12">
-                  <Button color="primary" onClick={this.handleConnect}>Connect</Button>{' '}
+                  {button}
                 </Col>
               </Card>
             </Col>
