@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "ReactNet",
+  "name": "A real-timish network traffic monitoring tool that uses a web interface with charts.",
   "icons": [
     {
       "src": "favicon.ico",
