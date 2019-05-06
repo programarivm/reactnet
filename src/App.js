@@ -196,6 +196,9 @@ class App extends Component {
     return (
       <div>
         <NavBar onConnect={this.handleConnect} onDisconnect={this.handleDisconnect} state={this.state} />
+        <footer className="text-center m-4">
+          <small>ReactNet says: Have an awesome day!</small>
+        </footer>
       </div>
     );
   }
