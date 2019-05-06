@@ -1,6 +1,6 @@
 ## ReactNet
 
-A real-time network traffic monitoring tool that uses a web interface with charts.
+A real-timish network traffic monitoring tool that uses a web interface with charts.
 
 <p align="center">
 	<img src="https://github.com/programarivm/reactnet/blob/master/resources/01-figure-ipv4.png" />
@@ -14,9 +14,9 @@ A real-time network traffic monitoring tool that uses a web interface with chart
 	<b>Figure 2</b>. Protocol hierarchy statistics listing both number of packets and bytes.
 </p>
 
-## 1. Server
+## Server
 
-### 1.1. `tcpdump` writer
+### `tcpdump` writer
 
 	php cli/tcpdump-writer.php eth0 $USER
 
@@ -32,11 +32,11 @@ A real-time network traffic monitoring tool that uses a web interface with chart
 
     sudo setcap cap_net_raw,cap_net_admin=eip /usr/sbin/tcpdump
 
-### 1.2. WebSocket server
+### WebSocket server
 
     php cli/ws-server.php
 
-## 2. Client
+## Client
 
 In the project directory, you can run:
 
@@ -63,7 +63,7 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### Contributions
+## Contributions
 
 Would you help make this app better? Contributions are welcome.
 
