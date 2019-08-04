@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { NavBar } from "./components/NavBar.js";
-import Calc from './Calc.js';
+import Calc from './utils/Calc.js';
 import './App.css';
 
 const url = 'ws://localhost:3001';
