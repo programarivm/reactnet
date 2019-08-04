@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { NavBar } from "./components/NavBar.js";
-import calc  from './calc.js';
+import Calc from './Calc.js';
 import './App.css';
 
 const url = 'ws://localhost:3001';
@@ -184,11 +184,11 @@ class App extends Component {
 
   calc(data) {
     let newState = Object.assign({}, this.state);
-    calc.ips.v4.chart.occurrences(newState.ips.v4.chart.occurrences, data.ips.v4.conv);
-    calc.ips.v4.chart.endpoints(newState.ips.v4.chart.endpoints, data.ips.v4.endpoints);
-    calc.ips.v6.chart.occurrences(newState.ips.v6.chart.occurrences, data.ips.v6.conv);
-    calc.ips.v6.chart.endpoints(newState.ips.v6.chart.endpoints, data.ips.v6.endpoints);
-    calc.protocols(newState.protocols, data.protocols);
+    Calc.ips.v4.chart.occurrences(newState.ips.v4.chart.occurrences, data.ips.v4.conv);
+    Calc.ips.v4.chart.endpoints(newState.ips.v4.chart.endpoints, data.ips.v4.endpoints);
+    Calc.ips.v6.chart.occurrences(newState.ips.v6.chart.occurrences, data.ips.v6.conv);
+    Calc.ips.v6.chart.endpoints(newState.ips.v6.chart.endpoints, data.ips.v6.endpoints);
+    Calc.protocols(newState.protocols, data.protocols);
     this.setState(newState);
   }
 
