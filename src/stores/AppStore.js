@@ -153,7 +153,6 @@ class AppStore extends EventEmitter {
 		this.ws.onopen = () => {
 			this.state.connected = true;
 			this.ws.send(this.state.n);
-			console.log('opened...');
 		};
 
 		this.ws.onmessage = event => {
@@ -165,7 +164,6 @@ class AppStore extends EventEmitter {
 				if (this.state.connected) {
 					this.ws.send(this.state.n);
 					this.emit("update");
-					console.log('updated...');
 				}
 			}, 5000);
 		};
@@ -173,15 +171,10 @@ class AppStore extends EventEmitter {
 		this.ws.onclose = () => {
 			this.state.connected = false;
 		};
-
-		this.emit("connect");
-		console.log('connected...');
 	}
 
 	disconnect() {
 		this.ws.close();
-
-		this.emit("disconnect");
 	}
 
 	calc(data) {
