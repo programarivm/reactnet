@@ -11,15 +11,24 @@ import {
 import {HorizontalBar} from 'react-chartjs-2';
 
 class All extends React.Component {
+  _isMounted = false;
+
   constructor() {
     super();
     this.state = AppStore.getState();
   }
 
-  componentWillMount() {
+  componentDidMount() {
+    this._isMounted = true;
     AppStore.on("update", () => {
-      this.setState(AppStore.getState());
+      if (this._isMounted) {
+        this.setState(AppStore.getState());
+      }
     });
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   render() {

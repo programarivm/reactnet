@@ -18,20 +18,30 @@ import { V6 as Ipv6 } from "./IPs/V6.js";
 import { All as AllProtocols } from "./Protocols/All.js";
 
 class NavBar extends React.Component {
+  _isMounted = false;
+
   constructor(props) {
     super(props);
-
     this.state = {
       isOpen: false
     };
-
     this.toggle = this.toggle.bind(this);
   }
 
+  componentDidMount() {
+    this._isMounted = true;
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
   toggle() {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
+    if (this._isMounted) {
+      this.setState({
+        isOpen: !this.state.isOpen
+      });
+    }
   }
 
   render() {
