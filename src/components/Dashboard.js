@@ -1,3 +1,5 @@
+import AppActions from '../actions/AppActions.js';
+import AppStore from '../stores/AppStore.js';
 import React from 'react';
 import {
   Breadcrumb,
@@ -10,27 +12,20 @@ import {
 } from 'reactstrap';
 
 class Dashboard extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.handleConnect = this.handleConnect.bind(this);
-    this.handleDisconnect = this.handleDisconnect.bind(this);
+  connect() {
+    AppActions.connect();
   }
 
-  handleConnect() {
-    this.props.onConnect();
-  }
-
-  handleDisconnect() {
-    this.props.onDisconnect();
+  disconnect() {
+    AppActions.disconnect();
   }
 
   render() {
     let button;
-    if (!this.props.state.connected) {
-      button = <Button color="primary" onClick={this.handleConnect}>Connect</Button>;
+    if (!AppStore.getState().connected) {
+      button = <Button color="primary" onClick={this.connect}>Connect</Button>;
     } else {
-      button = <Button color="primary" onClick={this.handleDisconnect}>Disconnect</Button>;
+      button = <Button color="primary" onClick={this.disconnect}>Disconnect</Button>;
     }
     return (
       <div>

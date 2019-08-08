@@ -1,5 +1,4 @@
-const AppConstants = {
-  CONNECT: 'CONNECT'
-};
-
-export default AppConstants;
+export default {
+	CONNECT: 'CONNECT',
+	DISCONNECT: 'DISCONNECT'
+}

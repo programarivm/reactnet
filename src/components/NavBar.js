@@ -26,22 +26,12 @@ class NavBar extends React.Component {
     };
 
     this.toggle = this.toggle.bind(this);
-    this.handleConnect = this.handleConnect.bind(this);
-    this.handleDisconnect = this.handleDisconnect.bind(this);
   }
 
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
     });
-  }
-
-  handleConnect() {
-    this.props.onConnect();
-  }
-
-  handleDisconnect() {
-    this.props.onDisconnect();
   }
 
   render() {
@@ -88,19 +78,19 @@ class NavBar extends React.Component {
         <Route exact path="/" render={() => (<Redirect to="/dashboard" />)} />
         <Route
           path="/dashboard"
-          render={(props) => <Dashboard onConnect={this.handleConnect} onDisconnect={this.handleDisconnect} state={this.props.state} {...props} />}
+          render={(props) => <Dashboard {...props} />}
         />
         <Route
           path="/ips/v4"
-          render={(props) => <Ipv4 state={this.props.state} {...props} />}
+          render={(props) => <Ipv4 {...props} />}
         />
         <Route
           path="/ips/v6"
-          render={(props) => <Ipv6 state={this.props.state} {...props} />}
+          render={(props) => <Ipv6 {...props} />}
         />
         <Route
           path="/protocols/all"
-          render={(props) => <AllProtocols state={this.props.state} {...props} />}
+          render={(props) => <AllProtocols {...props} />}
         />
       </div>
     );

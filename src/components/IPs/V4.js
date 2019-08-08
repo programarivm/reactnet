@@ -1,3 +1,4 @@
+import AppStore from '../../stores/AppStore.js';
 import React from 'react';
 import {
   Breadcrumb,
@@ -23,6 +24,17 @@ const horizontalBar = {
 };
 
 class V4 extends React.Component {
+  constructor() {
+    super();
+    this.state = AppStore.getState();
+  }
+
+  componentWillMount() {
+    AppStore.on("update", () => {
+      this.setState(AppStore.getState());
+    });
+  }
+
   render() {
     return (
       <div>
@@ -47,10 +59,10 @@ class V4 extends React.Component {
                       </thead>
                       <tbody>
                           {
-                            Object.keys(this.props.state.ips.v4.chart.occurrences.history).map((item, index) => {
+                            Object.keys(this.state.ips.v4.chart.occurrences.history).map((item, index) => {
                               return (<tr key={index}>
                                 <td>{item}</td>
-                                <td>{this.props.state.ips.v4.chart.occurrences.history[item]}</td>
+                                <td>{this.state.ips.v4.chart.occurrences.history[item]}</td>
                               </tr>)
                             })
                           }
@@ -58,7 +70,7 @@ class V4 extends React.Component {
                     </Table>
                   </Col>
                   <Col lg="8">
-                    <Polar data={this.props.state.ips.v4.chart.occurrences} options={polar} redraw />
+                    <Polar data={this.state.ips.v4.chart.occurrences} options={polar} redraw />
                   </Col>
                 </Row>
               </Card>
@@ -67,7 +79,7 @@ class V4 extends React.Component {
                 <p>Endpoints that can be seen in the capture ordered by number of bytes.</p>
                 <Row>
                   <Col lg="12">
-                    <HorizontalBar data={this.props.state.ips.v4.chart.endpoints} height={350} width={null} options={horizontalBar} redraw />
+                    <HorizontalBar data={this.state.ips.v4.chart.endpoints} height={350} width={null} options={horizontalBar} redraw />
                   </Col>
                   <Col lg="12" className="ip-endpoints">
                     <Table>
@@ -85,7 +97,7 @@ class V4 extends React.Component {
                       </thead>
                       <tbody>
                           {
-                            this.props.state.ips.v4.chart.endpoints.history.map((item, index) => {
+                            this.state.ips.v4.chart.endpoints.history.map((item, index) => {
                               return (<tr key={index}>
                                 <td>{index + 1}</td>
                                 <td>{item.ip}</td>

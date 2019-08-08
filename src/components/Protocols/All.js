@@ -1,3 +1,4 @@
+import AppStore from '../../stores/AppStore.js';
 import React from 'react';
 import {
   Breadcrumb,
@@ -10,6 +11,17 @@ import {
 import {HorizontalBar} from 'react-chartjs-2';
 
 class All extends React.Component {
+  constructor() {
+    super();
+    this.state = AppStore.getState();
+  }
+
+  componentWillMount() {
+    AppStore.on("update", () => {
+      this.setState(AppStore.getState());
+    });
+  }
+
   render() {
     return (
       <div>
@@ -27,15 +39,15 @@ class All extends React.Component {
                   <Col lg="4">
                     <ul className="protocol-tree">
                       {
-                        this.props.state.protocols.tshark.map(function(item, index) {
+                        this.state.protocols.tshark.map(function(item, index) {
                           return (<li key={index}>{'--'.repeat(item.level)} {item.name}</li>)
                         })
                       }
                     </ul>
                   </Col>
                   <Col lg="8">
-                    <HorizontalBar data={this.props.state.protocols.chart.bytes} redraw />
-                    <HorizontalBar data={this.props.state.protocols.chart.frames} redraw />
+                    <HorizontalBar data={this.state.protocols.chart.bytes} redraw />
+                    <HorizontalBar data={this.state.protocols.chart.frames} redraw />
                   </Col>
                 </Row>
               </Card>
